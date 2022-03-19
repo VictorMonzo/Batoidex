@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dex.batoi.batoidex_bat">
    <application
+       android:usesCleartextTraffic="true"
+
         android:label="batoidex_bat"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
