@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: BoxDecoration(
                                 color: getColor(type),
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20)),
+                                    const BorderRadius.all(Radius.circular(20)),
                               ),
                               child: Stack(children: [
                                 Positioned(

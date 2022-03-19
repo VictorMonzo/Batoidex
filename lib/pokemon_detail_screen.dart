@@ -1,3 +1,4 @@
+import 'package:batoidex_bat/pokemon_moviments_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -312,6 +313,46 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                              width: width * 0.3,
+                              child: const Text(
+                                'Movements',
+                                style: TextStyle(
+                                  color: Colors.blueGrey,
+                                  fontSize: 18,
+                                ),
+                              )),
+                          InkWell(
+                            child: Container(
+                              child: const Text(
+                                'Click here to see',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => PokemonMoviments(
+                                            index: widget.pokemonDetail['id'],
+                                            img: widget.pokemonDetail['img'],
+                                            heroTag: widget.heroTag,
+                                          )));
+                            },
+                          ),
                         ],
                       ),
                     )
