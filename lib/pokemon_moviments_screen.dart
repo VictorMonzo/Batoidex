@@ -68,7 +68,7 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                  color: Colors.black87),
             )),
         Positioned(
           top: 150,
@@ -89,7 +89,7 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
                               vertical: 8.0, horizontal: 12),
                           child: Container(
                             decoration: const BoxDecoration(
-                              color: Colors.black87,
+                              color: Colors.black54,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
                             ),
