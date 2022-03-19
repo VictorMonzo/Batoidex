@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var pokeApi =
       "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
-  late List pokedex;
+  late List pokedex = [];
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: width,
           child: Column(
             children: [
-              pokedex != null
+              pokedex.isNotEmpty
                   ? Expanded(
                       child: GridView.builder(
                       gridDelegate:
@@ -149,9 +149,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ))
-                  : const Center(
-                      child: CircularProgressIndicator(),
-                    )
+                  : const Padding(
+                    padding: EdgeInsets.only(top: 24.0),
+                    child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                  )
             ],
           ),
         ),
