@@ -3,7 +3,7 @@
    <application
        android:usesCleartextTraffic="true"
 
-        android:label="batoidex_bat"
+        android:label="Batoidex"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
