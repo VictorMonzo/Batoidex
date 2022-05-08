@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -68,7 +69,7 @@ class _LoginFormState extends State<LoginForm> {
                         decoration: InputDecoration(
                           hintStyle: TextStyle(fontSize: 22),
                           border: InputBorder.none,
-                          icon: Icon(Icons.account_circle_rounded),
+                          icon: Icon(Icons.lock_rounded),
                           hintText: "********",
                         ),
                       ),
@@ -141,6 +142,20 @@ class _LoginFormState extends State<LoginForm> {
                 ),
               ),
             ),
+            Container(
+              margin: const EdgeInsets.only(left: 16, top: 24),
+              child: const IconButton(
+                  onPressed: null,
+                  icon: Icon(FontAwesomeIcons.google,color: Color(0xfff1665f))
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 16, top: 24),
+              child: const IconButton(
+                  onPressed: null,
+                  icon: Icon(FontAwesomeIcons.facebook,color: Color(0xff45b7fe))
+              ),
+            )
           ],
         )
       ],
