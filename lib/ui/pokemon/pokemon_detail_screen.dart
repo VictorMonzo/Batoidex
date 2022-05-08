@@ -1,4 +1,4 @@
-import 'package:batoidex_bat/pokemon_moviments_screen.dart';
+import 'package:batoidex_bat/ui/pokemon/pokemon_moviments_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 

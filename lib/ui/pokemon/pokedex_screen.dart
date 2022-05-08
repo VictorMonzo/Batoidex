@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-import 'package:batoidex_bat/pokemon_detail_screen.dart';
+import 'package:batoidex_bat/ui/pokemon/pokemon_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Pokedex extends StatefulWidget {
+  const Pokedex({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _PokedexState createState() => _PokedexState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _PokedexState extends State<Pokedex> {
   var pokeApi =
       "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
   late List pokedex = [];
