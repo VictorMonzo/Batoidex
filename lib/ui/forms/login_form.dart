@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -79,34 +80,40 @@ class _LoginFormState extends State<LoginForm> {
               ),
               Align(
                 alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.only(right: 15),
-                  height: 80,
-                  width: 80,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.green[200]!.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                    shape: BoxShape.circle,
-                    gradient: const LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [
-                        Color(0xff1bccba),
-                        Color(0xff22e2ab),
+                child: InkWell(
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 15),
+                    height: 80,
+                    width: 80,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.green[200]!.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: const Offset(0, 3),
+                        ),
                       ],
+                      shape: BoxShape.circle,
+                      gradient: const LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Color(0xff1bccba),
+                          Color(0xff22e2ab),
+                        ],
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_forward_outlined,
+                      color: Colors.white,
+                      size: 32,
                     ),
                   ),
-                  child: const Icon(
-                    Icons.arrow_forward_outlined,
-                    color: Colors.white,
-                    size: 32,
-                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => const Pokedex()));
+                  },
                 ),
               ),
             ],
@@ -146,15 +153,15 @@ class _LoginFormState extends State<LoginForm> {
               margin: const EdgeInsets.only(left: 16, top: 24),
               child: const IconButton(
                   onPressed: null,
-                  icon: Icon(FontAwesomeIcons.google,color: Color(0xfff1665f))
-              ),
+                  icon:
+                      Icon(FontAwesomeIcons.google, color: Color(0xfff1665f))),
             ),
             Container(
               margin: const EdgeInsets.only(left: 16, top: 24),
               child: const IconButton(
                   onPressed: null,
-                  icon: Icon(FontAwesomeIcons.facebook,color: Color(0xff45b7fe))
-              ),
+                  icon: Icon(FontAwesomeIcons.facebook,
+                      color: Color(0xff45b7fe))),
             )
           ],
         )
