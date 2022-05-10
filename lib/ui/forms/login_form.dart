@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
+import 'package:batoidex_bat/services/Firebase.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -10,6 +11,16 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -54,24 +65,26 @@ class _LoginFormState extends State<LoginForm> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(left: 16, right: 32),
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
                           hintStyle: TextStyle(fontSize: 20),
                           border: InputBorder.none,
                           icon: Icon(Icons.account_circle_rounded),
-                          hintText: "Username",
+                          hintText: "Email",
                         ),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 16, right: 32),
-                      child: const TextField(
+                      child: TextField(
+                        controller: passwordController,
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintStyle: TextStyle(fontSize: 22),
                           border: InputBorder.none,
                           icon: Icon(Icons.lock_rounded),
-                          hintText: "********",
+                          hintText: "Password",
                         ),
                       ),
                     ),
@@ -112,7 +125,7 @@ class _LoginFormState extends State<LoginForm> {
                   ),
                   onTap: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => const Pokedex()));
+                        context, MaterialPageRoute(builder: (_) => const PokedexScreen()));
                   },
                 ),
               ),

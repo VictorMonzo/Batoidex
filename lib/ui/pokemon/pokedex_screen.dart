@@ -5,14 +5,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class Pokedex extends StatefulWidget {
-  const Pokedex({Key? key}) : super(key: key);
+class PokedexScreen extends StatefulWidget {
+  const PokedexScreen({Key? key}) : super(key: key);
 
   @override
-  _PokedexState createState() => _PokedexState();
+  _PokedexScreenState createState() => _PokedexScreenState();
 }
 
-class _PokedexState extends State<Pokedex> {
+class _PokedexScreenState extends State<PokedexScreen> {
   var pokeApi =
       "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
   late List pokedex = [];
