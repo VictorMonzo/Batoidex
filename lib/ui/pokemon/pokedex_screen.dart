@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemon_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
     super.initState();
     if (mounted) {
       fetchPokemonData();
+      //MyFirebaseAuthService().signOut();
     }
   }
 
