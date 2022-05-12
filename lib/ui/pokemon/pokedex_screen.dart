@@ -53,7 +53,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
                   color: Colors.black),
             )),
         Positioned(
-          top: 144,
+          top: 150,
           bottom: 0,
           width: width,
           child: Column(
