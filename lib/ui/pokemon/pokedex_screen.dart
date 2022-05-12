@@ -24,7 +24,6 @@ class _PokedexScreenState extends State<PokedexScreen> {
     super.initState();
     if (mounted) {
       fetchPokemonData();
-      //MyFirebaseAuthService().signOut();
     }
   }
 

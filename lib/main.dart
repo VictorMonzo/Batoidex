@@ -1,6 +1,7 @@
 import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
 import 'package:batoidex_bat/ui/background/background.dart';
 import 'package:batoidex_bat/ui/forms/login_form.dart';
+import 'package:batoidex_bat/ui/forms/verify_email_form.dart';
 import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +34,9 @@ class Pokedex extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasData) {
-                  return const PokedexScreen();
+                  return const VerifyEmailForm();
                 } else if (snapshot.hasError) {
-                  return const Center(child: Text('Something Went Wrong!'));
+                  return Stack(children: [Background(), const Center(child: Text('Something Went Wrong!'))]);
                 } else {
                   return Stack(children: [Background(), const LoginForm()]);
                 }
@@ -44,60 +45,4 @@ class Pokedex extends StatelessWidget {
           ),
         ));
   }
-
-/*//ESTO FUNCIONA
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => GoogleSignInProvider(),
-        child: MaterialApp(
-          title: 'Batoidex',
-          home: Scaffold(
-            body: Stack(
-              children: [
-                Background(),
-                const LoginForm(),
-              ],
-            ),
-          ),
-        ));
-  }*/
-
-/*@override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Batoidex',
-      home: Scaffold(
-        body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const PokedexScreen();
-            } else {
-              return Stack(
-                children: [
-                  Background(),
-                  const LoginForm(),
-                ],
-              );
-            }
-          },
-        ),
-      ),
-    );
-  }*/
-
-/*@override
-  Widget build(BuildContext context) => Scaffold(
-        body: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return PokedexScreen();
-            } else {
-              return Text("aaaaa");
-            }
-          },
-        ), // StreamBuilder
-      );*/ // Scaffold
 }

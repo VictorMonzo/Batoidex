@@ -1,33 +1,78 @@
+import 'dart:async';
+
+import 'package:batoidex_bat/services/MyColors.dart';
+import 'package:batoidex_bat/services/MyFunctions.dart';
+import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
 import 'package:batoidex_bat/ui/background/background.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/firebase/FirebaseAuth.dart';
-
-class ResetPasswordForm extends StatefulWidget {
-  const ResetPasswordForm({Key? key}) : super(key: key);
+class VerifyEmailForm extends StatefulWidget {
+  const VerifyEmailForm({Key? key}) : super(key: key);
 
   @override
-  State<ResetPasswordForm> createState() => _ResetPasswordFormState();
+  State<VerifyEmailForm> createState() => _VerifyEmailFormState();
 }
 
-class _ResetPasswordFormState extends State<ResetPasswordForm> {
-  final emailController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-
-  validateForm() {
-    return formKey.currentState!.validate();
-  }
+class _VerifyEmailFormState extends State<VerifyEmailForm> {
+  bool isEmailVerified = false;
+  bool canResendEmail = false;
+  Timer? timer;
 
   @override
   void dispose() {
-    emailController.dispose();
+    timer?.cancel();
     super.dispose();
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+
+    if (!isEmailVerified) {
+      sendVerificationEmail();
+
+      timer = Timer.periodic(
+          const Duration(seconds: 3), (_) => checkEmailVerified());
+    }
+  }
+
+  Future sendVerificationEmail() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser!;
+      await user.sendEmailVerification();
+
+      MyFunctions().toast('E-mail sent.', MyColors().greenLight);
+
+      setState(() {
+        canResendEmail = false;
+      });
+      await Future.delayed(const Duration(seconds: 5));
+      setState(() {
+        canResendEmail = true;
+      });
+    } catch (e) {
+      MyFunctions().toast(e.toString(), MyColors().redDegradedLight);
+    }
+  }
+
+  Future checkEmailVerified() async {
+    await FirebaseAuth.instance.currentUser!.reload();
+    setState(() {
+      isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+    });
+
+    if (isEmailVerified) timer?.cancel();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Material(
+    return isEmailVerified
+        ? const PokedexScreen()
+        : Material(
       child: Stack(
         children: [
           Background(),
@@ -37,7 +82,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               Container(
                 margin: const EdgeInsets.only(bottom: 60),
                 child: const Text(
-                  "Reset password",
+                  "Verify email",
                   style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
@@ -68,33 +113,23 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                           ),
                         ],
                       ),
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              margin:
-                                  const EdgeInsets.only(left: 16, right: 32),
-                              child: TextFormField(
-                                controller: emailController,
-                                decoration: const InputDecoration(
-                                  hintStyle: TextStyle(fontSize: 20),
-                                  border: InputBorder.none,
-                                  icon: Icon(Icons.account_circle_rounded),
-                                  hintText: "Email",
-                                ),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (email) => email != null &&
-                                        !EmailValidator.validate(email)
-                                    ? 'Enter a valid email'
-                                    : null,
-                              ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          margin:
+                          const EdgeInsets.only(left: 16, right: 32),
+                          child: const Text(
+                            'Resent email',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey,
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     Align(
                       alignment: Alignment.centerRight,
@@ -106,7 +141,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.green[200]!.withOpacity(0.5),
+                                color:
+                                Colors.green[200]!.withOpacity(0.5),
                                 spreadRadius: 5,
                                 blurRadius: 7,
                                 offset: const Offset(0, 3),
@@ -129,10 +165,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                           ),
                         ),
                         onTap: () {
-                          if (validateForm()) {
-                            MyFirebaseAuthService().resetPassword(
-                                emailController.text.trim(), context);
-                          }
+                          canResendEmail ? sendVerificationEmail() : null;
                         },
                       ),
                     ),
@@ -146,7 +179,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     child: Container(
                       margin: const EdgeInsets.only(right: 16, top: 16),
                       child: Text(
-                        'Back',
+                        'Cancel',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -154,7 +187,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                         ),
                       ),
                     ),
-                    onTap: () => Navigator.pop(context),
+                    onTap: () =>
+                        MyFirebaseAuthService().signOut()
+                    ,
                   ),
                 ],
               ),
@@ -164,7 +199,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   Container(
                     margin: const EdgeInsets.only(left: 16, top: 24),
                     child: const Text(
-                      'Receive an email to reset your password.',
+                      'A verification email has been sent to your email.',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,

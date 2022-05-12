@@ -179,6 +179,25 @@ class _RegisterFormState extends State<RegisterForm> {
                   ],
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 16, top: 16),
+                      child: Text(
+                        'Back',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ),
+                    onTap: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
             ],
           ),
         ],
