@@ -52,6 +52,9 @@ dependencies:
   # Validators
   email_validator: '^2.0.1'
 
+  # Navigation bar
+  curved_navigation_bar: ^1.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

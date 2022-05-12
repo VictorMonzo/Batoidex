@@ -36,7 +36,10 @@ class Pokedex extends StatelessWidget {
                 } else if (snapshot.hasData) {
                   return const VerifyEmailForm();
                 } else if (snapshot.hasError) {
-                  return Stack(children: [Background(), const Center(child: Text('Something Went Wrong!'))]);
+                  return Stack(children: [
+                    Background(),
+                    const Center(child: Text('Something Went Wrong!'))
+                  ]);
                 } else {
                   return Stack(children: [Background(), const LoginForm()]);
                 }

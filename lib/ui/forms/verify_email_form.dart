@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:batoidex_bat/bottom_navigation_bar.dart';
 import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
@@ -71,148 +72,146 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
   @override
   Widget build(BuildContext context) {
     return isEmailVerified
-        ? const PokedexScreen()
+        ? const MyBottomNavigationBar()
         : Material(
-      child: Stack(
-        children: [
-          Background(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 60),
-                child: const Text(
-                  "Verify email",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 150,
-                child: Stack(
+            child: Stack(
+              children: [
+                Background(),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: 150,
-                      margin: const EdgeInsets.only(
-                        right: 70,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(100),
-                          bottomRight: Radius.circular(100),
+                      margin: const EdgeInsets.only(bottom: 60),
+                      child: const Text(
+                        "Verify email",
+                        style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 0,
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 150,
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 150,
+                            margin: const EdgeInsets.only(
+                              right: 70,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(100),
+                                bottomRight: Radius.circular(100),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 0,
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(left: 16, right: 32),
+                                child: const Text(
+                                  'Resent email',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: InkWell(
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 15),
+                                height: 80,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.green[200]!.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: const Offset(0, 3),
+                                    ),
+                                  ],
+                                  shape: BoxShape.circle,
+                                  gradient: const LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    colors: [
+                                      Color(0xff1bccba),
+                                      Color(0xff22e2ab),
+                                    ],
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.arrow_forward_outlined,
+                                  color: Colors.white,
+                                  size: 32,
+                                ),
+                              ),
+                              onTap: () {
+                                canResendEmail ? sendVerificationEmail() : null;
+                              },
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 16, top: 16),
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ),
+                          onTap: () => MyFirebaseAuthService().signOut(),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                          margin:
-                          const EdgeInsets.only(left: 16, right: 32),
+                          margin: const EdgeInsets.only(left: 16, top: 24),
                           child: const Text(
-                            'Resent email',
+                            'A verification email has been sent to your email.',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.w600,
-                              color: Colors.grey,
+                              color: Color(0xffe98f60),
                             ),
                           ),
                         ),
                       ],
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: InkWell(
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 15),
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color:
-                                Colors.green[200]!.withOpacity(0.5),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                            shape: BoxShape.circle,
-                            gradient: const LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                Color(0xff1bccba),
-                                Color(0xff22e2ab),
-                              ],
-                            ),
-                          ),
-                          child: const Icon(
-                            Icons.arrow_forward_outlined,
-                            color: Colors.white,
-                            size: 32,
-                          ),
-                        ),
-                        onTap: () {
-                          canResendEmail ? sendVerificationEmail() : null;
-                        },
-                      ),
-                    ),
+                    )
                   ],
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  InkWell(
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 16, top: 16),
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey[400],
-                        ),
-                      ),
-                    ),
-                    onTap: () =>
-                        MyFirebaseAuthService().signOut()
-                    ,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 16, top: 24),
-                    child: const Text(
-                      'A verification email has been sent to your email.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xffe98f60),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+              ],
+            ),
+          );
   }
 }

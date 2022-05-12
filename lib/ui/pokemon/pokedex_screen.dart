@@ -31,8 +31,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Scaffold(
-        body: Stack(
+    return Stack(
       children: [
         Positioned(
           top: -50,
@@ -54,7 +53,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
                   color: Colors.black),
             )),
         Positioned(
-          top: 150,
+          top: 144,
           bottom: 0,
           width: width,
           child: Column(
@@ -160,7 +159,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
           ),
         ),
       ],
-    ));
+    );
   }
 
   void fetchPokemonData() {
