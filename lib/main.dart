@@ -25,6 +25,10 @@ class Pokedex extends StatelessWidget {
     return ChangeNotifierProvider(
         create: (context) => GoogleSignInProvider(),
         child: MaterialApp(
+          theme: ThemeData(
+            primaryColor: Colors.blue.shade300,
+            dividerColor: Colors.black
+          ),
           navigatorKey: navigatorKey,
           title: 'Batoidex',
           home: Scaffold(
