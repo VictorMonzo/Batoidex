@@ -2,7 +2,7 @@ import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemon_search.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemones_favorites_screen.dart';
-import 'package:batoidex_bat/ui/profile_screen.dart';
+import 'package:batoidex_bat/ui/profile/profile_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
