@@ -1,11 +1,11 @@
 import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
+import 'package:batoidex_bat/ui/profile/edit_profile_screen.dart';
 import 'package:batoidex_bat/ui/profile/widget/numbers_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'widget/appbar_widget.dart';
-import 'widget/button_widget.dart';
 import 'widget/profile_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -30,7 +30,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             imagePath: userAuth.photoURL ??
                 userData.imagePath ??
                 'https://via.placeholder.com/150',
-            onClicked: () async {},
+            onClicked: () async {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const EditProfileScreen()));
+            },
           ),
           const SizedBox(height: 24),
           buildName(
@@ -63,11 +66,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: const TextStyle(color: Colors.grey),
           )
         ],
-      );
-
-  Widget buildUpgradeButton() => ButtonWidget(
-        text: 'Sign Out',
-        onClicked: () => MyFirebaseAuthService().signOut(),
       );
 
   Widget buildAbout(about) => Container(
