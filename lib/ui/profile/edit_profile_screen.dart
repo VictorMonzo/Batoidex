@@ -137,6 +137,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
 
       final imageTemporary = File(image.path);
       setState(() => this.image = imageTemporary);
+
+      //MyFirebaseData().saveImagePath(imageTemporary);
     } on PlatformException catch (e) {
       MyFunctions().toast(
           'Failed to pick image ${e.message}', MyColors().redDegradedDark);
