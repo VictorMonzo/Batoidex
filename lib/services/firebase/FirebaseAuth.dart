@@ -16,8 +16,6 @@ class MyFirebaseAuthService {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      saveDataCreated();
-
       navigateToPokedex(context);
     } on FirebaseAuthException catch (e) {
       MyFunctions().toast(e.message, MyColors().redDegradedDark);
