@@ -1,5 +1,6 @@
 import 'package:batoidex_bat/main.dart';
 import 'package:batoidex_bat/services/MyColors.dart';
+import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/forms/login_form.dart';
 import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +16,8 @@ class MyFirebaseAuthService {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
+      saveDataCreated();
+
       navigateToPokedex(context);
     } on FirebaseAuthException catch (e) {
       MyFunctions().toast(e.message, MyColors().redDegradedDark);
@@ -29,6 +32,8 @@ class MyFirebaseAuthService {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      saveDataCreated();
 
       navigateToPokedex(context);
     } on FirebaseAuthException catch (e) {
@@ -72,5 +77,10 @@ class MyFirebaseAuthService {
   navigateToLogin(context) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => const LoginForm()));
+  }
+
+  saveDataCreated() {
+    DateTime now = DateTime.now();
+    MyFirebaseData().saveUserCreationData('${now.day}/${now.month}/${now.year}');
   }
 }

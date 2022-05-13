@@ -3,8 +3,7 @@ class UserData {
   final String? name;
   final String? about;
   final String? creationDate;
-  final int numPokeFavs;
-  final bool isDarkMode;
+  final int? numPokeFavs;
 
   const UserData({
     required this.imagePath,
@@ -12,6 +11,12 @@ class UserData {
     required this.about,
     required this.creationDate,
     required this.numPokeFavs,
-    required this.isDarkMode,
   });
+
+  static UserData fromJson(Map<String, dynamic> json) => UserData(
+      imagePath: json['imagePath'],
+      name: json['name'],
+      about: json['about'],
+      creationDate: json['data_creation'],
+      numPokeFavs: null);
 }

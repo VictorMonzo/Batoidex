@@ -1,6 +1,6 @@
 import 'package:batoidex_bat/model/user_data.dart';
-import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
+import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,14 +8,16 @@ import 'widget/button_widget.dart';
 import 'widget/profile_widget.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({Key? key}) : super(key: key);
+  final UserData userData;
+
+  const EditProfileScreen({Key? key, required this.userData}) : super(key: key);
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  UserData userData = MyFunctions.myUser;
+class _EditProfileScreenState extends State<EditProfileScreen>
+    with WidgetsBindingObserver {
   final userAuth = FirebaseAuth.instance.currentUser!;
 
   late final TextEditingController nameController;
@@ -26,11 +28,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.initState();
 
     nameController = TextEditingController(
-        text: userData.name ??
+        text: widget.userData.name ??
             userAuth.displayName ??
             'You don\'t have a name yet');
     aboutController = TextEditingController(
-        text: userData.about ??
+        text: widget.userData.about ??
             'Edit your profile if you want to add a description');
   }
 
@@ -58,7 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         children: [
           ProfileWidget(
             imagePath: userAuth.photoURL ??
-                userData.imagePath ??
+                widget.userData.imagePath ??
                 'https://via.placeholder.com/150',
             isEdit: true,
             onClicked: () async {},
@@ -112,7 +114,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Widget buildUpgradeButton() => ButtonWidget(
         text: 'Save',
-        onClicked: () => MyFunctions()
-            .toast(nameController.text.trim(), MyColors().blueDegradedDark),
+        onClicked: () {
+          MyFirebaseData().saveUserData(
+              nameController.text.trim(), aboutController.text.trim());
+
+          Navigator.pop(context);
+        },
       );
 }

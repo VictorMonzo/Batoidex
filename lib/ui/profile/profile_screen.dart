@@ -1,5 +1,7 @@
+import 'package:batoidex_bat/model/user_data.dart';
+import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
-import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
+import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/profile/edit_profile_screen.dart';
 import 'package:batoidex_bat/ui/profile/widget/numbers_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,39 +19,28 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final userAuth = FirebaseAuth.instance.currentUser!;
-  final userData = MyFunctions.myUser;
+
+  @override
+  void initState() {
+    super.initState();
+    MyFunctions().toast('Estamos dentro', MyColors().blueDegradedDark);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          ProfileWidget(
-            imagePath: userAuth.photoURL ??
-                userData.imagePath ??
-                'https://via.placeholder.com/150',
-            onClicked: () async {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const EditProfileScreen()));
-            },
-          ),
-          const SizedBox(height: 24),
-          buildName(
-              userData.name ??
-                  userAuth.displayName ??
-                  'You don\'t have a name yet',
-              userAuth.email),
-          const SizedBox(height: 24),
-          NumbersWidget(
-              pokeFavorites: userData.numPokeFavs,
-              verifiedEmail: userAuth.emailVerified,
-              creationDate: userData.creationDate ?? 'No date'),
-          const SizedBox(height: 48),
-          buildAbout(userData.about ??
-              'Edit your profile if you want to add a description'),
-        ],
+      body: FutureBuilder<UserData?>(
+        future: MyFirebaseData().readData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong! ${snapshot.error}');
+          } else if (snapshot.hasData) {
+            return buildProfile(snapshot.data!);
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
@@ -84,5 +75,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ),
+      );
+
+  Widget buildProfile(UserData userData) => ListView(
+        physics: const BouncingScrollPhysics(),
+        children: [
+          ProfileWidget(
+            imagePath: userAuth.photoURL ??
+                userData?.imagePath ??
+                'https://via.placeholder.com/150',
+            onClicked: () async {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => EditProfileScreen(userData: userData)));
+            },
+          ),
+          const SizedBox(height: 24),
+          buildName(
+              userData?.name ??
+                  userAuth.displayName ??
+                  'You don\'t have a name yet',
+              userAuth.email),
+          const SizedBox(height: 24),
+          NumbersWidget(
+              pokeFavorites: userData?.numPokeFavs ?? 0,
+              verifiedEmail: userAuth.emailVerified,
+              creationDate: userData?.creationDate ?? 'No date'),
+          const SizedBox(height: 48),
+          buildAbout(userData?.about ??
+              'Edit your profile if you want to add a description'),
+        ],
       );
 }

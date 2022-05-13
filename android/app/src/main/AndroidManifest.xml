@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dex.batoi.batoidex_bat">
-   <application
+
+    <application
        android:usesCleartextTraffic="true"
 
         android:label="Batoidex"
