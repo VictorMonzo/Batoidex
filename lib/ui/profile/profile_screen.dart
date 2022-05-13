@@ -21,12 +21,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final userAuth = FirebaseAuth.instance.currentUser!;
 
   @override
-  void initState() {
-    super.initState();
-    MyFunctions().toast('Estamos dentro', MyColors().blueDegradedDark);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
@@ -82,7 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         children: [
           ProfileWidget(
             imagePath: userAuth.photoURL ??
-                userData?.imagePath ??
+                userData.imagePath ??
                 'https://via.placeholder.com/150',
             onClicked: () async {
               Navigator.push(
@@ -93,17 +87,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const SizedBox(height: 24),
           buildName(
-              userData?.name ??
+              userData.name ??
                   userAuth.displayName ??
                   'You don\'t have a name yet',
               userAuth.email),
           const SizedBox(height: 24),
           NumbersWidget(
-              pokeFavorites: userData?.numPokeFavs ?? 0,
+              pokeFavorites: userData.numPokeFavs ?? 0,
               verifiedEmail: userAuth.emailVerified,
-              creationDate: userData?.creationDate ?? 'No date'),
+              creationDate: userData.creationDate ?? 'No date'),
           const SizedBox(height: 48),
-          buildAbout(userData?.about ??
+          buildAbout(userData.about ??
               'Edit your profile if you want to add a description'),
         ],
       );
