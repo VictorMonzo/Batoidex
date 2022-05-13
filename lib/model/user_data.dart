@@ -18,5 +18,5 @@ class UserData {
       name: json['name'],
       about: json['about'],
       creationDate: json['data_creation'],
-      numPokeFavs: null);
+      numPokeFavs: json['num_poke_favorites']);
 }

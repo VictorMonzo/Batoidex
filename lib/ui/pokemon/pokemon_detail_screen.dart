@@ -400,6 +400,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                   widget.pokemonDetail['type'][0],
                   widget.pokemonDetail['img']);
 
+          //MyFirebaseData().saveUserNumFavorites();
+
           setState(() => isFavorite = !isFavorite);
         },
         iconSize: 40,

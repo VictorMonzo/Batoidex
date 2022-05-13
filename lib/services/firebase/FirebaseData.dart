@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:batoidex_bat/model/pokemon_card.dart';
 import 'package:batoidex_bat/model/user_data.dart';
 import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
@@ -48,6 +49,22 @@ class MyFirebaseData {
     MyFunctions().toast('User modified successfully', MyColors().greenLight);
   }
 
+  Future saveUserNumFavorites() async {
+    final docUser =
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+
+/*    final int numPokeFavs = FirebaseFirestore.instance
+        .collection(COLLECTION_USER)
+        .doc(getUid())
+        .collection(COLLECTION_POKE_FAVORITES)
+        .snapshots()
+        .length;
+
+    final json = {'num_poke_favorites': getPokeFavoritesLenght()};
+
+    await docUser.update(json);*/
+  }
+
   /// FAVORITES
   Future<bool> getPokeFavoriteById(int id) async {
     final docPokeFav = FirebaseFirestore.instance
@@ -68,12 +85,7 @@ class MyFirebaseData {
         .collection(COLLECTION_POKE_FAVORITES)
         .doc('$id');
 
-    final json = {
-      'id': id,
-      'name': name,
-      'type': type,
-      'img': img
-    };
+    final json = {'id': id, 'name': name, 'type': type, 'img': img};
 
     await docPokeFav.set(json);
 
@@ -92,7 +104,14 @@ class MyFirebaseData {
     MyFunctions().toast('Pokemon removed from favorite', MyColors().greenLight);
   }
 
-  // para obtener todos los pokefavs ver el video del que he visto muchos videos
+  Stream<List<PokemonCard>> getPokeFavorites() => FirebaseFirestore.instance
+      .collection(COLLECTION_USER)
+      .doc(getUid())
+      .collection(COLLECTION_POKE_FAVORITES)
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map((doc) => PokemonCard.fromJson(doc.data()))
+          .toList());
 
   /// READ DATA
   Future<UserData?> readData() async {

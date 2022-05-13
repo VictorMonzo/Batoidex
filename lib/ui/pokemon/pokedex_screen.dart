@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
+import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemon_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +73,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
                                 vertical: 8.0, horizontal: 12),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: getColor(type),
+                                color: MyColors().getColor(type),
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(20)),
                               ),
@@ -142,7 +142,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
                                 MaterialPageRoute(
                                     builder: (_) => PokemonDetailScreen(
                                           pokemonDetail: pokedex[index],
-                                          color: getColor(type),
+                                          color: MyColors().getColor(type),
                                           heroTag: index,
                                         )));
                           },
@@ -172,36 +172,5 @@ class _PokedexScreenState extends State<PokedexScreen> {
         setState(() {});
       }
     });
-  }
-
-  ColorSwatch<int> getColor(type) {
-    switch (type) {
-      case 'Grass':
-        return Colors.greenAccent;
-      case 'Fore':
-        return Colors.redAccent;
-      case 'Water':
-        return Colors.blue;
-      case 'Electric':
-        return Colors.yellow;
-      case 'Rock':
-        return Colors.grey;
-      case 'Ground':
-        return Colors.brown;
-      case 'Psychic':
-        return Colors.indigo;
-      case 'Fighting':
-        return Colors.orange;
-      case 'Bug':
-        return Colors.lightGreenAccent;
-      case 'Ghost':
-        return Colors.deepPurple;
-      case 'Normal':
-        return Colors.grey;
-      case 'Poison':
-        return Colors.deepPurpleAccent;
-      default:
-        return Colors.pink;
-    }
   }
 }
