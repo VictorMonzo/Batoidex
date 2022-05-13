@@ -1,3 +1,5 @@
+import 'package:batoidex_bat/services/MyColors.dart';
+import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemon_moviments_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +42,23 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
               color: Colors.white,
               iconSize: 30,
             ),
+          ),
+          Positioned(
+            top: 40,
+            right: 7,
+            child: FutureBuilder<bool>(
+                future: MyFirebaseData()
+                    .getPokeFavoriteById(widget.pokemonDetail['id']),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong! ${snapshot.error}',
+                        style: const TextStyle(color: Colors.white));
+                  } else if (snapshot.hasData) {
+                    return buildIconButton(snapshot.data!);
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
           ),
           Positioned(
               top: 90,
@@ -100,7 +119,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                               width: width * 0.3,
                               child: const Text(
                                 'Name',
@@ -109,14 +128,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                   fontSize: 18,
                                 ),
                               )),
-                          Container(
-                              child: Text(
+                          Text(
                             widget.pokemonDetail['name'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
-                          )),
+                          ),
                         ],
                       ),
                     ),
@@ -125,7 +143,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                               width: width * 0.3,
                               child: const Text(
                                 'Height',
@@ -134,14 +152,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                   fontSize: 18,
                                 ),
                               )),
-                          Container(
-                              child: Text(
+                          Text(
                             widget.pokemonDetail['height'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
-                          )),
+                          ),
                         ],
                       ),
                     ),
@@ -150,7 +167,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                               width: width * 0.3,
                               child: const Text(
                                 'Weight',
@@ -159,14 +176,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                   fontSize: 18,
                                 ),
                               )),
-                          Container(
-                              child: Text(
+                          Text(
                             widget.pokemonDetail['weight'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
-                          )),
+                          ),
                         ],
                       ),
                     ),
@@ -175,7 +191,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                               width: width * 0.3,
                               child: const Text(
                                 'Spawn Time',
@@ -184,14 +200,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                   fontSize: 18,
                                 ),
                               )),
-                          Container(
-                              child: Text(
+                          Text(
                             widget.pokemonDetail['spawn_time'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
-                          )),
+                          ),
                         ],
                       ),
                     ),
@@ -200,7 +215,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                               width: width * 0.3,
                               child: const Text(
                                 'Weakness',
@@ -209,14 +224,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                   fontSize: 18,
                                 ),
                               )),
-                          Container(
-                              child: Text(
+                          Text(
                             widget.pokemonDetail['weaknesses'].join(', '),
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
-                          )),
+                          ),
                         ],
                       ),
                     ),
@@ -225,7 +239,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                               width: width * 0.3,
                               child: const Text(
                                 'Evolution',
@@ -273,7 +287,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                               width: width * 0.3,
                               child: const Text(
                                 'Pre Form',
@@ -321,7 +335,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                               width: width * 0.3,
                               child: const Text(
                                 'Movements',
@@ -331,15 +345,13 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                 ),
                               )),
                           InkWell(
-                            child: Container(
-                              child: const Text(
-                                'Click here to see',
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.underline,
-                                ),
+                            child: const Text(
+                              'Click here to see',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
                               ),
                             ),
                             onTap: () {
@@ -376,4 +388,21 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
       ),
     );
   }
+
+  Widget buildIconButton(bool isFavorite) => IconButton(
+        icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
+        onPressed: () {
+          isFavorite
+              ? MyFirebaseData().deletePokeFavorite(widget.pokemonDetail['id'])
+              : MyFirebaseData().savePokeFavorite(
+                  widget.pokemonDetail['id'],
+                  widget.pokemonDetail['name'],
+                  widget.pokemonDetail['type'][0],
+                  widget.pokemonDetail['img']);
+
+          setState(() => isFavorite = !isFavorite);
+        },
+        iconSize: 40,
+        color: isFavorite ? MyColors().redDegradedDark : Colors.white,
+      );
 }
