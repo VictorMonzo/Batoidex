@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:batoidex_bat/model/user_data.dart';
+import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'widget/button_widget.dart';
 import 'widget/profile_widget.dart';
@@ -22,6 +27,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
 
   late final TextEditingController nameController;
   late final TextEditingController aboutController;
+
+  File? image;
 
   @override
   void initState() {
@@ -63,7 +70,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                 widget.userData.imagePath ??
                 'https://via.placeholder.com/150',
             isEdit: true,
-            onClicked: () async {},
+            image: image,
+            onClicked: () => showImageSource(context),
           ),
           const SizedBox(height: 24),
           Column(
@@ -121,4 +129,39 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           Navigator.pop(context);
         },
       );
+
+  Future pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+
+      final imageTemporary = File(image.path);
+      setState(() => this.image = imageTemporary);
+    } on PlatformException catch (e) {
+      MyFunctions().toast(
+          'Failed to pick image ${e.message}', MyColors().redDegradedDark);
+    }
+  }
+
+  showImageSource(BuildContext context) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (context) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.camera_alt),
+                  title: const Text('Camera'),
+                  onTap: () =>
+                      Navigator.of(context).pop(pickImage(ImageSource.camera)),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.image),
+                  title: const Text('Gallery'),
+                  onTap: () =>
+                      Navigator.of(context).pop(pickImage(ImageSource.gallery)),
+                )
+              ],
+            ));
+  }
 }
