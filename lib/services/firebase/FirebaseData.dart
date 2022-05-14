@@ -54,11 +54,12 @@ class MyFirebaseData {
     final docUser =
         FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
-    final int numPokeFavs = await getPokeFavoritesLenght();
+    docUser.collection(COLLECTION_POKE_FAVORITES).get().then(
+        (value) async {
+          final json = {'num_poke_favorites': value.size};
 
-    final json = {'num_poke_favorites': numPokeFavs};
-
-    await docUser.update(json);
+          await docUser.update(json);
+        });
   }
 
   /// FAVORITES
@@ -146,15 +147,6 @@ class MyFirebaseData {
       .map((snapshot) => snapshot.docs
           .map((doc) => PokemonCard.fromJson(doc.data()))
           .toList());
-
-  Future<int> getPokeFavoritesLenght() {
-    return FirebaseFirestore.instance
-        .collection(COLLECTION_USER)
-        .doc(getUid())
-        .collection(COLLECTION_POKE_FAVORITES)
-        .snapshots()
-        .length;
-  }
 
   /// READ DATA
   Future<UserData?> readData() async {

@@ -434,7 +434,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
               : MyFirebaseData()
                   .savePokeFavorite(widget.pokemonCard ?? widget.pokemonDetail);
 
-          //MyFirebaseData().saveUserNumFavorites();
+          MyFirebaseData().saveUserNumFavorites();
 
           setState(() => isFavorite = !isFavorite);
         },
