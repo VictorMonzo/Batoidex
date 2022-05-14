@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:batoidex_bat/model/user_data.dart';
 import 'package:batoidex_bat/services/MyColors.dart';
+import 'package:batoidex_bat/services/MyConstants.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -68,7 +69,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           ProfileWidget(
             imagePath: userAuth.photoURL ??
                 widget.userData.imagePath ??
-                'https://via.placeholder.com/150',
+                MyConstants().NO_IMAGE_PROFILE,
             isEdit: true,
             image: image,
             onClicked: () => showImageSource(context),

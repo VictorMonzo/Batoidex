@@ -1,5 +1,5 @@
 import 'package:batoidex_bat/model/user_data.dart';
-import 'package:batoidex_bat/services/MyColors.dart';
+import 'package:batoidex_bat/services/MyConstants.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/profile/edit_profile_screen.dart';
@@ -77,12 +77,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ProfileWidget(
             imagePath: userAuth.photoURL ??
                 userData.imagePath ??
-                'https://via.placeholder.com/150',
+                MyConstants().NO_IMAGE_PROFILE,
             onClicked: () async {
-              Navigator.push(
+              await Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (_) => EditProfileScreen(userData: userData)));
+
+              setState(() {});
             },
           ),
           const SizedBox(height: 24),
