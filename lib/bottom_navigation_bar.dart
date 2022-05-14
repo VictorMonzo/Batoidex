@@ -39,7 +39,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             key: navigationKey,
             color: MyColors().blueDegradedDark,
             backgroundColor: Colors.transparent,
-            height: 60,
+            height: 50,
             animationCurve: Curves.easeInOut,
             animationDuration: const Duration(milliseconds: 300),
             index: index,
