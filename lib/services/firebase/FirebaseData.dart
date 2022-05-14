@@ -159,6 +159,16 @@ class MyFirebaseData {
     return null;
   }
 
+  Future<bool> isNewAccount() async {
+    final docUser = FirebaseFirestore.instance
+        .collection(COLLECTION_USER)
+        .doc(getUid());
+
+    final snapshot = await docUser.get();
+
+    return !snapshot.exists;
+  }
+
   getUid() {
     return FirebaseAuth.instance.currentUser!.uid;
   }

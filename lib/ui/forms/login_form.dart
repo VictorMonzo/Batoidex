@@ -188,7 +188,7 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             InkWell(
               child: Container(
-                margin: const EdgeInsets.only(left: 16, top: 24),
+                margin: const EdgeInsets.only(left: 16, top: 16),
                 child: const Text(
                   'Register',
                   style: TextStyle(
@@ -203,8 +203,8 @@ class _LoginFormState extends State<LoginForm> {
                     MaterialPageRoute(builder: (_) => const RegisterForm()));
               },
             ),
-            /*Container(
-              margin: const EdgeInsets.only(left: 16, top: 24),
+            Container(
+              margin: const EdgeInsets.only(left: 16, top: 16),
               child: IconButton(
                   onPressed: () {
                     final provider = Provider.of<GoogleSignInProvider>(context,
@@ -213,7 +213,7 @@ class _LoginFormState extends State<LoginForm> {
                   },
                   icon: const Icon(FontAwesomeIcons.google,
                       color: Color(0xfff1665f))),
-            ),*/
+            ),
           ],
         )
       ],

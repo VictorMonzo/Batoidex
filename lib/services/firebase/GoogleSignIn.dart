@@ -1,3 +1,7 @@
+import 'package:batoidex_bat/services/MyColors.dart';
+import 'package:batoidex_bat/services/MyFunctions.dart';
+import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
+import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,20 +14,26 @@ class GoogleSignInProvider extends ChangeNotifier {
   GoogleSignInAccount get user => _user!;
 
   Future logIn() async {
-    final googleUser = await googleSignIn.signIn();
+    try {
+      final googleUser = await googleSignIn.signIn();
 
-    if (googleUser == null) return;
+      if (googleUser == null) return;
 
-    _user = googleUser;
+      _user = googleUser;
 
-    final googleAuth = await googleUser.authentication;
+      final googleAuth = await googleUser.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken
-    );
-    
-    await FirebaseAuth.instance.signInWithCredential(credential);
+      final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      if (await MyFirebaseData().isNewAccount()) {
+        MyFirebaseAuthService().saveDataCreated();
+      }
+    } catch (e) {
+      MyFunctions().toast(e.toString(), MyColors().redDegradedDark);
+    }
 
     notifyListeners();
   }

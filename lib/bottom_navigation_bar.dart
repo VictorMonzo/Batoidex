@@ -14,7 +14,7 @@ class MyBottomNavigationBar extends StatefulWidget {
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int index = 2;
+  int index = 0;
 
   final screens = [
     const PokedexScreen(),
