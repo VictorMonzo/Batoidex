@@ -19,7 +19,7 @@ class MyFirebaseData {
     final docUser =
         FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
-    convertToBase64(image).then((String result) async {
+    convertToBase64(image).then((result) async {
       final json = {'image_path': result};
 
       await docUser.update(json);
@@ -54,12 +54,11 @@ class MyFirebaseData {
     final docUser =
         FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
-    docUser.collection(COLLECTION_POKE_FAVORITES).get().then(
-        (value) async {
-          final json = {'num_poke_favorites': value.size};
+    docUser.collection(COLLECTION_POKE_FAVORITES).get().then((value) async {
+      final json = {'num_poke_favorites': value.size};
 
-          await docUser.update(json);
-        });
+      await docUser.update(json);
+    });
   }
 
   /// FAVORITES

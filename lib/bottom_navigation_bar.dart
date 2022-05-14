@@ -1,6 +1,5 @@
 import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
-import 'package:batoidex_bat/ui/pokemon/pokemon_search.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemones_favorites_screen.dart';
 import 'package:batoidex_bat/ui/profile/profile_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -15,11 +14,10 @@ class MyBottomNavigationBar extends StatefulWidget {
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
-  int index = 3;
+  int index = 2;
 
   final screens = [
     const PokedexScreen(),
-    const PokemonSearchScreen(),
     const PokemonesFavoritesScreen(),
     const ProfileScreen()
   ];
@@ -28,7 +26,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   Widget build(BuildContext context) {
     final items = <Widget>[
       const Icon(Icons.home, size: 30),
-      const Icon(Icons.search, size: 30),
       const Icon(Icons.favorite, size: 30),
       const Icon(Icons.person, size: 30),
     ];
