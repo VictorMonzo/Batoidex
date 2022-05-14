@@ -80,7 +80,7 @@ class PokemonCardWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (_) => PokemonDetailScreen(
-                        pokemonDetail: pokemon,
+                        pokemonCard: pokemon,
                         color: MyColors().getColor(pokemon.type),
                         heroTag: pokemon.id,
                       )));

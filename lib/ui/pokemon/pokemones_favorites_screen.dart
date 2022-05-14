@@ -52,19 +52,24 @@ class _PokemonesFavoritesScreenState extends State<PokemonesFavoritesScreen> {
               } else if (snapshot.hasData) {
                 final pokemones = snapshot.data!;
 
-                return Column(
-                  children: [
-                    Expanded(
-                        child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, childAspectRatio: 1.4),
-                      itemCount: pokemones.length,
-                      itemBuilder: (context, index) =>
-                          PokemonCardWidget(pokemon: pokemones[index]),
-                    )),
-                  ],
-                );
+                if (pokemones.isEmpty) {
+                  return const Center(
+                      child: Text('You don\t have any favorite pokemon yet'));
+                } else {
+                  return Column(
+                    children: [
+                      Expanded(
+                          child: GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2, childAspectRatio: 1.4),
+                        itemCount: pokemones.length,
+                        itemBuilder: (context, index) =>
+                            PokemonCardWidget(pokemon: pokemones[index]),
+                      )),
+                    ],
+                  );
+                }
               } else {
                 return const Center(child: CircularProgressIndicator());
               }

@@ -1,3 +1,4 @@
+import 'package:batoidex_bat/model/pokemon_card.dart';
 import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemon_moviments_screen.dart';
@@ -6,12 +7,14 @@ import 'package:flutter/material.dart';
 
 class PokemonDetailScreen extends StatefulWidget {
   final pokemonDetail;
+  final PokemonCard? pokemonCard;
   final Color color;
   final int heroTag;
 
   const PokemonDetailScreen(
       {Key? key,
       this.pokemonDetail,
+      this.pokemonCard,
       required this.color,
       required this.heroTag})
       : super(key: key);
@@ -47,8 +50,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
             top: 40,
             right: 7,
             child: FutureBuilder<bool>(
-                future: MyFirebaseData()
-                    .getPokeFavoriteById(widget.pokemonDetail['id']),
+                future: MyFirebaseData().getPokeFavoriteById(
+                    widget.pokemonCard?.id ?? widget.pokemonDetail['id']),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text('Something went wrong! ${snapshot.error}',
@@ -64,7 +67,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
               top: 90,
               left: 20,
               child: Text(
-                widget.pokemonDetail['name'],
+                widget.pokemonCard?.name ?? widget.pokemonDetail['name'],
                 style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -78,7 +81,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                   padding: const EdgeInsets.only(
                       left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
                   child: Text(
-                    widget.pokemonDetail['type'].join(', '),
+                    widget.pokemonCard?.types ??
+                        widget.pokemonDetail['type'].join(', '),
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
@@ -129,7 +133,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                 ),
                               )),
                           Text(
-                            widget.pokemonDetail['name'],
+                            widget.pokemonCard?.name ??
+                                widget.pokemonDetail['name'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -153,7 +158,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                 ),
                               )),
                           Text(
-                            widget.pokemonDetail['height'],
+                            widget.pokemonCard?.height ??
+                                widget.pokemonDetail['height'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -177,7 +183,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                 ),
                               )),
                           Text(
-                            widget.pokemonDetail['weight'],
+                            widget.pokemonCard?.weight ??
+                                widget.pokemonDetail['weight'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -201,7 +208,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                 ),
                               )),
                           Text(
-                            widget.pokemonDetail['spawn_time'],
+                            widget.pokemonCard?.spawnTime ??
+                                widget.pokemonDetail['spawn_time'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -225,7 +233,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                 ),
                               )),
                           Text(
-                            widget.pokemonDetail['weaknesses'].join(', '),
+                            widget.pokemonCard?.weakness ??
+                                widget.pokemonDetail['weaknesses'].join(', '),
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -248,37 +257,49 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                   fontSize: 18,
                                 ),
                               )),
-                          widget.pokemonDetail['next_evolution'] != null
-                              ? SizedBox(
-                                  height: 20,
-                                  width: width * 0.55,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: widget
-                                        .pokemonDetail['next_evolution'].length,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 8.0),
-                                        child: Text(
-                                          widget.pokemonDetail['next_evolution']
-                                              [index]['name'],
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                              : const Text(
-                                  'Maxed Out',
-                                  style: TextStyle(
+                          widget.pokemonCard?.nextEvolution != null
+                              ? Text(
+                                  '${widget.pokemonCard?.nextEvolution}',
+                                  style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 )
+                              : widget.pokemonDetail != null &&
+                                      widget.pokemonDetail['next_evolution'] !=
+                                          null
+                                  ? SizedBox(
+                                      height: 20,
+                                      width: width * 0.55,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: widget
+                                            .pokemonDetail['next_evolution']
+                                            .length,
+                                        itemBuilder: (context, index) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 8.0),
+                                            child: Text(
+                                              widget.pokemonDetail[
+                                                      'next_evolution'][index]
+                                                  ['name'],
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  : const Text(
+                                      'Maxed Out',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    )
                         ],
                       ),
                     ),
@@ -296,37 +317,49 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                   fontSize: 18,
                                 ),
                               )),
-                          widget.pokemonDetail['prev_evolution'] != null
-                              ? SizedBox(
-                                  height: 20,
-                                  width: width * 0.55,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: widget
-                                        .pokemonDetail['prev_evolution'].length,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 8.0),
-                                        child: Text(
-                                          widget.pokemonDetail['prev_evolution']
-                                              [index]['name'],
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                              : const Text(
-                                  'Just Hatched',
-                                  style: TextStyle(
+                          widget.pokemonCard?.prevEvolution != null
+                              ? Text(
+                                  '${widget.pokemonCard?.prevEvolution}',
+                                  style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
                                 )
+                              : widget.pokemonDetail != null &&
+                                      widget.pokemonDetail['prev_evolution'] !=
+                                          null
+                                  ? SizedBox(
+                                      height: 20,
+                                      width: width * 0.55,
+                                      child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: widget
+                                            .pokemonDetail['prev_evolution']
+                                            .length,
+                                        itemBuilder: (context, index) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 8.0),
+                                            child: Text(
+                                              widget.pokemonDetail[
+                                                      'prev_evolution'][index]
+                                                  ['name'],
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    )
+                                  : const Text(
+                                      'Just Hatched',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    )
                         ],
                       ),
                     ),
@@ -359,8 +392,10 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (_) => PokemonMoviments(
-                                            index: widget.pokemonDetail['id'],
-                                            img: widget.pokemonDetail['img'],
+                                            index: widget.pokemonCard?.id ??
+                                                widget.pokemonDetail['id'],
+                                            img: widget.pokemonCard?.img ??
+                                                widget.pokemonDetail['img'],
                                             heroTag: widget.heroTag,
                                           )));
                             },
@@ -379,7 +414,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
               child: Hero(
                 tag: widget.heroTag,
                 child: CachedNetworkImage(
-                  imageUrl: widget.pokemonDetail['img'],
+                  imageUrl:
+                      widget.pokemonCard?.img ?? widget.pokemonDetail['img'],
                   height: 200,
                   fit: BoxFit.fitHeight,
                 ),
@@ -393,12 +429,10 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
         icon: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
         onPressed: () {
           isFavorite
-              ? MyFirebaseData().deletePokeFavorite(widget.pokemonDetail['id'])
-              : MyFirebaseData().savePokeFavorite(
-                  widget.pokemonDetail['id'],
-                  widget.pokemonDetail['name'],
-                  widget.pokemonDetail['type'][0],
-                  widget.pokemonDetail['img']);
+              ? MyFirebaseData().deletePokeFavorite(
+                  widget.pokemonCard?.id ?? widget.pokemonDetail['id'])
+              : MyFirebaseData()
+                  .savePokeFavorite(widget.pokemonCard ?? widget.pokemonDetail);
 
           //MyFirebaseData().saveUserNumFavorites();
 

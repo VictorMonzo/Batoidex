@@ -8,6 +8,7 @@ import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class MyFirebaseData {
   final String COLLECTION_USER = 'users';
@@ -16,7 +17,7 @@ class MyFirebaseData {
   /// WRITE DATA
   Future saveImagePath(File image) async {
     final docUser =
-    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     convertToBase64(image).then((String result) async {
       final json = {'image_path': result};
@@ -31,7 +32,7 @@ class MyFirebaseData {
 
   Future saveUserCreationData(String creationData) async {
     final docUser =
-    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     final json = {'data_creation': creationData};
 
@@ -40,7 +41,7 @@ class MyFirebaseData {
 
   Future saveUserData(String name, String about) async {
     final docUser =
-    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     final json = {'name': name, 'about': about};
 
@@ -51,7 +52,7 @@ class MyFirebaseData {
 
   Future saveUserNumFavorites() async {
     final docUser =
-    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     final int numPokeFavs = await getPokeFavoritesLenght();
 
@@ -73,14 +74,52 @@ class MyFirebaseData {
     return snapshot.exists ? true : false;
   }
 
-  Future savePokeFavorite(int id, String name, String type, String img) async {
+  Future savePokeFavorite(pokemon) async {
     final docPokeFav = FirebaseFirestore.instance
         .collection(COLLECTION_USER)
         .doc(getUid())
         .collection(COLLECTION_POKE_FAVORITES)
-        .doc('$id');
+        .doc('${pokemon['id']}');
 
-    final json = {'id': id, 'name': name, 'type': type, 'img': img};
+    String? nextEvolution, prevEvolution;
+
+    if (pokemon['next_evolution'] != null) {
+      if (pokemon['next_evolution'].length == 2) {
+        nextEvolution =
+            '${pokemon['next_evolution'][0]['name']} ${pokemon['next_evolution'][1]['name']}';
+      } else {
+        nextEvolution = '${pokemon['next_evolution'][0]['name']}';
+      }
+    }
+
+    if (pokemon['prev_evolution'] != null) {
+      if (pokemon['prev_evolution'].length == 2) {
+        prevEvolution =
+            '${pokemon['prev_evolution'][0]['name']} ${pokemon['prev_evolution'][1]['name']}';
+      } else {
+        prevEvolution = '${pokemon['prev_evolution'][0]['name']}';
+      }
+    }
+
+    final json = PokemonCard(
+            id: pokemon['id'],
+            img: pokemon['img'],
+            name: pokemon['name'],
+            type: pokemon['type'][0],
+            types: pokemon['type']
+                .toString()
+                .replaceAll('[', '')
+                .replaceAll(']', ''),
+            weakness: pokemon['weaknesses']
+                .toString()
+                .replaceAll('[', '')
+                .replaceAll(']', ''),
+            spawnTime: pokemon['spawn_time'],
+            weight: pokemon['weight'],
+            height: pokemon['height'],
+            nextEvolution: nextEvolution,
+            prevEvolution: prevEvolution)
+        .toJson();
 
     await docPokeFav.set(json);
 
@@ -99,16 +138,14 @@ class MyFirebaseData {
     MyFunctions().toast('Pokemon removed from favorite', MyColors().greenLight);
   }
 
-  Stream<List<PokemonCard>> getPokeFavorites() =>
-      FirebaseFirestore.instance
-          .collection(COLLECTION_USER)
-          .doc(getUid())
-          .collection(COLLECTION_POKE_FAVORITES)
-          .snapshots()
-          .map((snapshot) =>
-          snapshot.docs
-              .map((doc) => PokemonCard.fromJson(doc.data()))
-              .toList());
+  Stream<List<PokemonCard>> getPokeFavorites() => FirebaseFirestore.instance
+      .collection(COLLECTION_USER)
+      .doc(getUid())
+      .collection(COLLECTION_POKE_FAVORITES)
+      .snapshots()
+      .map((snapshot) => snapshot.docs
+          .map((doc) => PokemonCard.fromJson(doc.data()))
+          .toList());
 
   Future<int> getPokeFavoritesLenght() {
     return FirebaseFirestore.instance
@@ -122,7 +159,7 @@ class MyFirebaseData {
   /// READ DATA
   Future<UserData?> readData() async {
     final docUser =
-    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
     final snapshot = await docUser.get();
 
     if (snapshot.exists) {
