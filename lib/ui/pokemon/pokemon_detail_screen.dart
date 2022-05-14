@@ -1,5 +1,6 @@
 import 'package:batoidex_bat/model/pokemon_card.dart';
 import 'package:batoidex_bat/services/MyColors.dart';
+import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemon_moviments_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -54,8 +55,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                     widget.pokemonCard?.id ?? widget.pokemonDetail['id']),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return Text('Something went wrong! ${snapshot.error}',
-                        style: const TextStyle(color: Colors.white));
+                    return MyFunctions()
+                        .buildTextCenterError('Something went wrong!');
                   } else if (snapshot.hasData) {
                     return buildIconButton(snapshot.data!);
                   } else {

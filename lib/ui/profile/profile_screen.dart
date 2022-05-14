@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         future: MyFirebaseData().readData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong! ${snapshot.error}');
+            return MyFunctions().buildTextCenterError('Something went wrong!');
           } else if (snapshot.hasData) {
             return buildProfile(snapshot.data!);
           } else {

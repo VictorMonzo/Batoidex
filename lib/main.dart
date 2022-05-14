@@ -1,3 +1,4 @@
+import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
 import 'package:batoidex_bat/ui/background/background.dart';
 import 'package:batoidex_bat/ui/forms/login_form.dart';
@@ -27,9 +28,7 @@ class Pokedex extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primaryColor: Colors.blue.shade300,
-            dividerColor: Colors.black
-          ),
+              primaryColor: Colors.blue.shade300, dividerColor: Colors.black),
           navigatorKey: navigatorKey,
           title: 'Batoidex',
           home: Scaffold(
@@ -43,7 +42,7 @@ class Pokedex extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Stack(children: [
                     Background(),
-                    const Center(child: Text('Something Went Wrong!'))
+                    MyFunctions().buildTextCenterError('Something went wrong!')
                   ]);
                 } else {
                   return Stack(children: [Background(), const LoginForm()]);

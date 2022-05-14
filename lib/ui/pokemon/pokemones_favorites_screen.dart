@@ -1,3 +1,4 @@
+import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/pokemon/widget/pokemon_card_widget.dart';
 import 'package:flutter/material.dart';
@@ -47,14 +48,14 @@ class _PokemonesFavoritesScreenState extends State<PokemonesFavoritesScreen> {
             stream: MyFirebaseData().getPokeFavorites(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return Center(
-                    child: Text('Something went wrong! ${snapshot.hasError}'));
+                return MyFunctions().buildTextCenterError(
+                    'Something went wrong! ${snapshot.hasError.toString()}');
               } else if (snapshot.hasData) {
                 final pokemones = snapshot.data!;
 
                 if (pokemones.isEmpty) {
-                  return const Center(
-                      child: Text('You don\t have any favorite pokemon yet'));
+                  return MyFunctions().buildTextCenterError(
+                      'You don\t have any favorite pokemon yet');
                 } else {
                   return Column(
                     children: [
