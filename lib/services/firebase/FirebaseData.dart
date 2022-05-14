@@ -16,7 +16,7 @@ class MyFirebaseData {
   /// WRITE DATA
   Future saveImagePath(File image) async {
     final docUser =
-        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     convertToBase64(image).then((String result) async {
       final json = {'image_path': result};
@@ -31,7 +31,7 @@ class MyFirebaseData {
 
   Future saveUserCreationData(String creationData) async {
     final docUser =
-        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     final json = {'data_creation': creationData};
 
@@ -40,7 +40,7 @@ class MyFirebaseData {
 
   Future saveUserData(String name, String about) async {
     final docUser =
-        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     final json = {'name': name, 'about': about};
 
@@ -51,18 +51,13 @@ class MyFirebaseData {
 
   Future saveUserNumFavorites() async {
     final docUser =
-        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
-/*    final int numPokeFavs = FirebaseFirestore.instance
-        .collection(COLLECTION_USER)
-        .doc(getUid())
-        .collection(COLLECTION_POKE_FAVORITES)
-        .snapshots()
-        .length;
+    final int numPokeFavs = await getPokeFavoritesLenght();
 
-    final json = {'num_poke_favorites': getPokeFavoritesLenght()};
+    final json = {'num_poke_favorites': numPokeFavs};
 
-    await docUser.update(json);*/
+    await docUser.update(json);
   }
 
   /// FAVORITES
@@ -104,19 +99,30 @@ class MyFirebaseData {
     MyFunctions().toast('Pokemon removed from favorite', MyColors().greenLight);
   }
 
-  Stream<List<PokemonCard>> getPokeFavorites() => FirebaseFirestore.instance
-      .collection(COLLECTION_USER)
-      .doc(getUid())
-      .collection(COLLECTION_POKE_FAVORITES)
-      .snapshots()
-      .map((snapshot) => snapshot.docs
-          .map((doc) => PokemonCard.fromJson(doc.data()))
-          .toList());
+  Stream<List<PokemonCard>> getPokeFavorites() =>
+      FirebaseFirestore.instance
+          .collection(COLLECTION_USER)
+          .doc(getUid())
+          .collection(COLLECTION_POKE_FAVORITES)
+          .snapshots()
+          .map((snapshot) =>
+          snapshot.docs
+              .map((doc) => PokemonCard.fromJson(doc.data()))
+              .toList());
+
+  Future<int> getPokeFavoritesLenght() {
+    return FirebaseFirestore.instance
+        .collection(COLLECTION_USER)
+        .doc(getUid())
+        .collection(COLLECTION_POKE_FAVORITES)
+        .snapshots()
+        .length;
+  }
 
   /// READ DATA
   Future<UserData?> readData() async {
     final docUser =
-        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+    FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
     final snapshot = await docUser.get();
 
     if (snapshot.exists) {
