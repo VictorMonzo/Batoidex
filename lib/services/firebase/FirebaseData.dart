@@ -8,26 +8,35 @@ import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class MyFirebaseData {
   final String COLLECTION_USER = 'users';
   final String COLLECTION_POKE_FAVORITES = 'poke_favorites';
+  final String IMAGE_PROFILE = 'image_profile';
+
+  UploadTask? uploadTask;
 
   /// WRITE DATA
   Future saveImagePath(File image) async {
+    final String path = '${getUid()}/$IMAGE_PROFILE';
+    final storage = FirebaseStorage.instance.ref().child(path);
+
+    uploadTask = storage.putFile(image);
+
+    final snapshot = await uploadTask!.whenComplete(() => {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+
     final docUser =
         FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
-    convertToBase64(image).then((result) async {
-      final json = {'image_path': result};
+    final json = {'image_url': urlDownload};
 
-      await docUser.update(json);
-
-      MyFunctions().toast(
-          'Modified profile picture successfully', MyColors().greenLight);
-    }).catchError(MyFunctions()
-        .toast('Failed to save the image', MyColors().redDegradedDark));
+    await docUser
+        .update(json)
+        .whenComplete(() => MyFunctions().toast(
+            'Modified profile picture successfully', MyColors().greenLight));
   }
 
   Future saveUserCreationData(String creationData) async {
@@ -160,9 +169,8 @@ class MyFirebaseData {
   }
 
   Future<bool> isNewAccount() async {
-    final docUser = FirebaseFirestore.instance
-        .collection(COLLECTION_USER)
-        .doc(getUid());
+    final docUser =
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     final snapshot = await docUser.get();
 

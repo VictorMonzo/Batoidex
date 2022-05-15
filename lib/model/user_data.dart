@@ -1,12 +1,12 @@
 class UserData {
-  final String? imagePath;
+  final String? imageUrl;
   final String? name;
   final String? about;
   final String? creationDate;
   final int? numPokeFavs;
 
   const UserData({
-    required this.imagePath,
+    required this.imageUrl,
     required this.name,
     required this.about,
     required this.creationDate,
@@ -14,7 +14,7 @@ class UserData {
   });
 
   static UserData fromJson(Map<String, dynamic> json) => UserData(
-      imagePath: json['imagePath'],
+      imageUrl: json['image_url'],
       name: json['name'],
       about: json['about'],
       creationDate: json['data_creation'],

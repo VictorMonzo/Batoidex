@@ -75,8 +75,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         physics: const BouncingScrollPhysics(),
         children: [
           ProfileWidget(
-            imagePath: userAuth.photoURL ??
-                userData.imagePath ??
+            imagePath: userData.imageUrl ??
+                userAuth.photoURL ??
                 MyConstants().NO_IMAGE_PROFILE,
             onClicked: () async {
               await Navigator.push(

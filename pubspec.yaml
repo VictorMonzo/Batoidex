@@ -41,6 +41,7 @@ dependencies:
   # Firebase
   firebase_auth: ^3.3.4
   firebase_core: ^1.16.0
+  firebase_storage: ^10.2.16
   google_sign_in: ^5.0.3
   cloud_firestore: ^3.1.5
 
@@ -58,6 +59,11 @@ dependencies:
 
   # Camera
   image_picker: ^0.8.5+3
+
+
+  # Search
+  #animated_type_ahead_searchbar: ^0.0.2
+  #animated_search_bar: ^2.2.0
 
 dev_dependencies:
   flutter_test:

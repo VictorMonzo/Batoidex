@@ -67,8 +67,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         physics: const BouncingScrollPhysics(),
         children: [
           ProfileWidget(
-            imagePath: userAuth.photoURL ??
-                widget.userData.imagePath ??
+            imagePath: widget.userData.imageUrl ??
+                userAuth.photoURL ??
                 MyConstants().NO_IMAGE_PROFILE,
             isEdit: true,
             image: image,
@@ -139,7 +139,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
       final imageTemporary = File(image.path);
       setState(() => this.image = imageTemporary);
 
-      //MyFirebaseData().saveImagePath(imageTemporary);
+      MyFirebaseData().saveImagePath(imageTemporary);
     } on PlatformException catch (e) {
       MyFunctions().toast(
           'Failed to pick image ${e.message}', MyColors().redDegradedDark);
