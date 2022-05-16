@@ -30,6 +30,7 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   late final TextEditingController aboutController;
 
   File? image;
+  String? imageRemoved;
 
   @override
   void initState() {
@@ -67,7 +68,8 @@ class _EditProfileScreenState extends State<EditProfileScreen>
         physics: const BouncingScrollPhysics(),
         children: [
           ProfileWidget(
-            imagePath: widget.userData.imageUrl ??
+            imagePath: imageRemoved ??
+                widget.userData.imageUrl ??
                 userAuth.photoURL ??
                 MyConstants().NO_IMAGE_PROFILE,
             isEdit: true,
@@ -163,7 +165,26 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                   title: const Text('Gallery'),
                   onTap: () =>
                       Navigator.of(context).pop(pickImage(ImageSource.gallery)),
-                )
+                ),
+                if (widget.userData.imageUrl != null ||
+                    userAuth.photoURL != null)
+                  ListTile(
+                    leading: const Icon(Icons.delete),
+                    title: const Text('Remove'),
+                    onTap: () {
+                      if (widget.userData.imageUrl != null) {
+                        Navigator.of(context)
+                            .pop(MyFirebaseData().deleteImagePath());
+
+                        setState(() => imageRemoved = userAuth.photoURL ??
+                            MyConstants().NO_IMAGE_PROFILE);
+                      } else if (userAuth.photoURL != null) {
+                        MyFunctions().toast(
+                            'This is the default image of your Google account',
+                            MyColors().redDegradedDark);
+                      }
+                    },
+                  )
               ],
             ));
   }

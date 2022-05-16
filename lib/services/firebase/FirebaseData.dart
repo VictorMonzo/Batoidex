@@ -33,10 +33,18 @@ class MyFirebaseData {
 
     final json = {'image_url': urlDownload};
 
-    await docUser
-        .update(json)
-        .whenComplete(() => MyFunctions().toast(
-            'Modified profile picture successfully', MyColors().greenLight));
+    await docUser.update(json).whenComplete(() => MyFunctions()
+        .toast('Modified profile picture successfully', MyColors().greenLight));
+  }
+
+  Future deleteImagePath() async {
+    final docUser =
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+
+    final json = {'image_url': null};
+
+    await docUser.update(json).whenComplete(() => MyFunctions()
+        .toast('Photo deleted successfully', MyColors().greenLight));
   }
 
   Future saveUserCreationData(String creationData) async {
