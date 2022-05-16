@@ -36,6 +36,34 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.1
   cached_network_image: ^3.0.0
+  font_awesome_flutter: ^9.2.0
+
+  # Firebase
+  firebase_auth: ^3.3.4
+  firebase_core: ^1.16.0
+  firebase_storage: ^10.2.16
+  google_sign_in: ^5.0.3
+  cloud_firestore: ^3.1.5
+
+  # State managment
+  provider: ^5.0.0
+
+  # Toast
+  fluttertoast: ^8.0.7
+
+  # Validators
+  email_validator: '^2.0.1'
+
+  # Navigation bar
+  curved_navigation_bar: ^1.0.1
+
+  # Camera
+  image_picker: ^0.8.5+3
+
+
+  # Search
+  #animated_type_ahead_searchbar: ^0.0.2
+  #animated_search_bar: ^2.2.0
 
 dev_dependencies:
   flutter_test:
