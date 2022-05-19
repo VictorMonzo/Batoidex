@@ -2,6 +2,7 @@ import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
 import 'package:batoidex_bat/ui/background/background.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({Key? key}) : super(key: key);
@@ -13,7 +14,7 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final passwordRepeatontroller = TextEditingController();
+  final passwordRepeatController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -25,7 +26,7 @@ class _RegisterFormState extends State<RegisterForm> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    passwordRepeatontroller.dispose();
+    passwordRepeatController.dispose();
     super.dispose();
   }
 
@@ -40,9 +41,9 @@ class _RegisterFormState extends State<RegisterForm> {
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 60),
-                child: const Text(
-                  'Register',
-                  style: TextStyle(
+                child:  Text(
+                  AppLocalizations.of(context)!.register,
+                  style: const TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
                   ),
@@ -82,17 +83,17 @@ class _RegisterFormState extends State<RegisterForm> {
                               const EdgeInsets.only(left: 16, right: 32),
                               child: TextFormField(
                                 controller: emailController,
-                                decoration: const InputDecoration(
-                                  hintStyle: TextStyle(fontSize: 20),
+                                decoration:  InputDecoration(
+                                  hintStyle: const TextStyle(fontSize: 20),
                                   border: InputBorder.none,
-                                  icon: Icon(Icons.account_circle_rounded),
-                                  hintText: "Email",
+                                  icon: const Icon(Icons.account_circle_rounded),
+                                  hintText: AppLocalizations.of(context)!.email,
                                 ),
                                 autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                                 validator: (email) => email != null &&
                                     !EmailValidator.validate(email)
-                                    ? 'Enter a valid email'
+                                    ? AppLocalizations.of(context)!.enterValidEmail
                                     : null,
                               ),
                             ),
@@ -101,34 +102,34 @@ class _RegisterFormState extends State<RegisterForm> {
                               child: TextFormField(
                                 controller: passwordController,
                                 obscureText: true,
-                                decoration: const InputDecoration(
-                                  hintStyle: TextStyle(fontSize: 22),
+                                decoration:  InputDecoration(
+                                  hintStyle: const TextStyle(fontSize: 22),
                                   border: InputBorder.none,
-                                  icon: Icon(Icons.lock_rounded),
-                                  hintText: "Password",
+                                  icon: const Icon(Icons.lock_rounded),
+                                  hintText: AppLocalizations.of(context)!.password,
                                 ),
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 validator: (password) =>
                                 password != null && password.length < 6
-                                    ? 'Enter min. 6 characters'
+                                    ? AppLocalizations.of(context)!.enterMinSixCharacters
                                     : null,
                               ),
                             ),
                             Container(
                               margin: const EdgeInsets.only(left: 16, right: 32),
                               child: TextFormField(
-                                controller: passwordRepeatontroller,
+                                controller: passwordRepeatController,
                                 obscureText: true,
-                                decoration: const InputDecoration(
-                                  hintStyle: TextStyle(fontSize: 22),
+                                decoration:  InputDecoration(
+                                  hintStyle: const TextStyle(fontSize: 22),
                                   border: InputBorder.none,
-                                  icon: Icon(Icons.lock_rounded),
-                                  hintText: 'Repeat password',
+                                  icon: const Icon(Icons.lock_rounded),
+                                  hintText: AppLocalizations.of(context)!.repeatPassword,
                                 ),
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 validator: (passwordRepeat) =>
                                 passwordRepeat != passwordController.text
-                                    ? 'Passwords do not match'
+                                    ? AppLocalizations.of(context)!.passwordsDoNotMatch
                                     : null,
                               ),
                             ),
@@ -186,7 +187,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     child: Container(
                       margin: const EdgeInsets.only(right: 16, top: 16),
                       child: Text(
-                        'Back',
+                        AppLocalizations.of(context)!.back,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,

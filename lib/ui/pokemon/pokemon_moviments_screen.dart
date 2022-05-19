@@ -3,23 +3,24 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PokemonMoviments extends StatefulWidget {
+class PokemonMovements extends StatefulWidget {
   final index;
   final img;
   final int heroTag;
 
-  const PokemonMoviments(
+  const PokemonMovements(
       {Key? key, this.index, this.img, required this.heroTag})
       : super(key: key);
 
   @override
-  _PokemonMovimentsState createState() => _PokemonMovimentsState();
+  _PokemonMovementsState createState() => _PokemonMovementsState();
 }
 
-class _PokemonMovimentsState extends State<PokemonMoviments> {
+class _PokemonMovementsState extends State<PokemonMovements> {
   var pokeApi = "pokeapi.co";
-  late List moviments = [];
+  late List movements = [];
 
   @override
   void initState() {
@@ -60,12 +61,12 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
             ),
           ),
         ),
-        const Positioned(
+         Positioned(
             top: 90,
             left: 20,
             child: Text(
-              'Movements',
-              style: TextStyle(
+              AppLocalizations.of(context)!.movements,
+              style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87),
@@ -76,13 +77,13 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
           width: width,
           child: Column(
             children: [
-              moviments.isNotEmpty
+              movements.isNotEmpty
                   ? Expanded(
                       child: GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3, childAspectRatio: 1.7),
-                      itemCount: moviments.length,
+                      itemCount: movements.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
@@ -104,7 +105,7 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
                                   )),
                               Center(
                                 child: Text(
-                                  moviments[index]['move']['name'],
+                                  movements[index]['move']['name'],
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
@@ -135,7 +136,7 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
     http.get(url).then((value) {
       if (value.statusCode == 200) {
         var decodedJsonData = jsonDecode(value.body);
-        moviments = decodedJsonData['moves'];
+        movements = decodedJsonData['moves'];
         setState(() {});
       }
     });

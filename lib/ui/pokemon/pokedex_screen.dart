@@ -5,6 +5,7 @@ import 'package:batoidex_bat/ui/pokemon/pokemon_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PokedexScreen extends StatefulWidget {
   const PokedexScreen({Key? key}) : super(key: key);
@@ -42,12 +43,12 @@ class _PokedexScreenState extends State<PokedexScreen> {
             fit: BoxFit.fitWidth,
           ),
         ),
-        const Positioned(
+         Positioned(
             top: 80,
             left: 20,
             child: Text(
-              'Batoidex',
-              style: TextStyle(
+              AppLocalizations.of(context)!.appTitle,
+              style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),

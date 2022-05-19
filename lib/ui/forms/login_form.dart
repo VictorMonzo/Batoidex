@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -38,9 +39,9 @@ class _LoginFormState extends State<LoginForm> {
       children: [
         Container(
           margin: const EdgeInsets.only(bottom: 60),
-          child: const Text(
-            "Login",
-            style: TextStyle(
+          child:  Text(
+            AppLocalizations.of(context)!.login,
+            style: const TextStyle(
               fontSize: 35,
               fontWeight: FontWeight.bold,
             ),
@@ -79,16 +80,16 @@ class _LoginFormState extends State<LoginForm> {
                         margin: const EdgeInsets.only(left: 16, right: 32),
                         child: TextFormField(
                           controller: emailController,
-                          decoration: const InputDecoration(
-                            hintStyle: TextStyle(fontSize: 20),
+                          decoration:  InputDecoration(
+                            hintStyle: const TextStyle(fontSize: 20),
                             border: InputBorder.none,
-                            icon: Icon(Icons.account_circle_rounded),
-                            hintText: "Email",
+                            icon: const Icon(Icons.account_circle_rounded),
+                            hintText: AppLocalizations.of(context)!.email,
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (email) =>
                               email != null && !EmailValidator.validate(email)
-                                  ? 'Enter a valid email'
+                                  ? AppLocalizations.of(context)!.enterValidEmail
                                   : null,
                         ),
                       ),
@@ -97,16 +98,16 @@ class _LoginFormState extends State<LoginForm> {
                         child: TextFormField(
                           controller: passwordController,
                           obscureText: true,
-                          decoration: const InputDecoration(
-                            hintStyle: TextStyle(fontSize: 22),
+                          decoration:  InputDecoration(
+                            hintStyle: const TextStyle(fontSize: 22),
                             border: InputBorder.none,
-                            icon: Icon(Icons.lock_rounded),
-                            hintText: "Password",
+                            icon: const Icon(Icons.lock_rounded),
+                            hintText: AppLocalizations.of(context)!.password,
                           ),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (password) =>
                               password != null && password.length < 6
-                                  ? 'Enter min. 6 characters'
+                                  ? AppLocalizations.of(context)!.enterMinSixCharacters
                                   : null,
                         ),
                       ),
@@ -166,7 +167,7 @@ class _LoginFormState extends State<LoginForm> {
               child: Container(
                 margin: const EdgeInsets.only(right: 16, top: 16),
                 child: Text(
-                  "Forgot ?",
+                  AppLocalizations.of(context)!.forgotPassword,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
@@ -189,9 +190,9 @@ class _LoginFormState extends State<LoginForm> {
             InkWell(
               child: Container(
                 margin: const EdgeInsets.only(left: 16, top: 16),
-                child: const Text(
-                  'Register',
-                  style: TextStyle(
+                child:  Text(
+                  AppLocalizations.of(context)!.register,
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: Color(0xffe98f60),

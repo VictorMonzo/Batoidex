@@ -2,6 +2,7 @@ import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/pokemon/widget/pokemon_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../model/pokemon_card.dart';
 
@@ -30,12 +31,12 @@ class _PokemonesFavoritesScreenState extends State<PokemonesFavoritesScreen> {
             fit: BoxFit.fitWidth,
           ),
         ),
-        const Positioned(
+        Positioned(
             top: 80,
             left: 20,
             child: Text(
-              'Favorites',
-              style: TextStyle(
+              AppLocalizations.of(context)!.favorites,
+              style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),

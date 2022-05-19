@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NumbersWidget extends StatelessWidget {
   final int pokeFavorites;
@@ -6,7 +7,10 @@ class NumbersWidget extends StatelessWidget {
   final String creationDate;
 
   const NumbersWidget(
-      {Key? key, required this.pokeFavorites, required this.verifiedEmail, required this.creationDate})
+      {Key? key,
+      required this.pokeFavorites,
+      required this.verifiedEmail,
+      required this.creationDate})
       : super(key: key);
 
   @override
@@ -14,11 +18,18 @@ class NumbersWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            buildButton(context, '$pokeFavorites', 'Favorites'),
+            buildButton(context, '$pokeFavorites',
+                AppLocalizations.of(context)!.favorites),
             buildDivider(),
-            buildButton(context, verifiedEmail ? ' Yes' : 'No', 'Verified email'),
+            buildButton(
+                context,
+                verifiedEmail
+                    ? AppLocalizations.of(context)!.yes
+                    : AppLocalizations.of(context)!.no,
+                AppLocalizations.of(context)!.verifiedEmail),
             buildDivider(),
-            buildButton(context, creationDate, 'Creation date'),
+            buildButton(context, creationDate,
+                AppLocalizations.of(context)!.creationDate),
           ],
         ),
       );

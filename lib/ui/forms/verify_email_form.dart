@@ -5,9 +5,9 @@ import 'package:batoidex_bat/services/MyColors.dart';
 import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseAuth.dart';
 import 'package:batoidex_bat/ui/background/background.dart';
-import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VerifyEmailForm extends StatefulWidget {
   const VerifyEmailForm({Key? key}) : super(key: key);
@@ -46,7 +46,8 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
 
-      MyFunctions().toast('E-mail sent.', MyColors().greenLight);
+      MyFunctions().toast(
+          AppLocalizations.of(context)!.emailsent, MyColors().greenLight);
 
       setState(() {
         canResendEmail = false;
@@ -71,6 +72,8 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     return isEmailVerified
         ? const MyBottomNavigationBar()
         : Material(
@@ -82,11 +85,15 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(bottom: 60),
-                      child: const Text(
-                        "Verify email",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
+                      child: SizedBox(
+                        width: width * 0.7,
+                        child: Text(
+                          AppLocalizations.of(context)!.verifyEmail,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -121,9 +128,9 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
                               Container(
                                 margin:
                                     const EdgeInsets.only(left: 16, right: 32),
-                                child: const Text(
-                                  'Resent email',
-                                  style: TextStyle(
+                                child: Text(
+                                  AppLocalizations.of(context)!.resentEmail,
+                                  style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.grey,
@@ -180,7 +187,7 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
                           child: Container(
                             margin: const EdgeInsets.only(right: 16, top: 16),
                             child: Text(
-                              'Cancel',
+                              AppLocalizations.of(context)!.cancel,
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
@@ -197,12 +204,16 @@ class _VerifyEmailFormState extends State<VerifyEmailForm> {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(left: 16, top: 24),
-                          child: const Text(
-                            'A verification email has been sent to your email.',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xffe98f60),
+                          child: SizedBox(
+                            width: width * 0.7,
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .verificationEmailHasBeenSentToYourEmail,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xffe98f60),
+                              ),
                             ),
                           ),
                         ),

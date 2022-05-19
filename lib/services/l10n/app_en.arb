@@ -1,0 +1,271 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "The current Language"
+  },
+
+  "appTitle": "Batoidex",
+  "@appTitle": {
+    "description": "Application Title"
+  },
+
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Favorites title text"
+  },
+
+  "somethingWentWrong": "Something went wrong!",
+  "@somethingWentWrong": {
+    "description": "Text error"
+  },
+
+  "name": "Name",
+  "@name": {
+    "description": "Pokemon detail name"
+  },
+
+  "height": "Height",
+  "@height": {
+    "description": "Pokemon detail height"
+  },
+
+  "weight": "Weight",
+  "@weight": {
+    "description": "Pokemon detail weight"
+  },
+
+  "spawnTime": "Spawn Time",
+  "@spawnTime": {
+    "description": "Pokemon detail Spawn Time"
+  },
+
+  "weakness": "Weakness",
+  "@weakness": {
+    "description": "Pokemon detail Weakness"
+  },
+
+  "evolution": "Evolution",
+  "@evolution": {
+    "description": "Pokemon detail Evolution"
+  },
+
+  "maxedOut": "Maxed Out",
+  "@maxedOut": {
+    "description": "Pokemon detail Maxed Out"
+  },
+
+  "preForm": "Pre Form",
+  "@preForm": {
+    "description": "Pokemon detail Pre Form"
+  },
+
+  "justHatched": "Just Hatched",
+  "@justHatched": {
+    "description": "Pokemon detail Just Hatched"
+  },
+
+  "movements": "Movements",
+  "@movements": {
+    "description": "Pokemon detail Movements and Movements title text"
+  },
+
+  "clickHereToSee": "Click here to see",
+  "@clickHereToSee": {
+    "description": "Pokemon detail Click here to see"
+  },
+
+  "about": "About",
+  "@about": {
+    "description": "Profile screen About"
+  },
+
+  "youDontHaveNameYet": "You don\\'t have a name yet",
+  "@youDontHaveNameYet": {
+    "description": "Profile screen No name"
+  },
+
+  "noDate": "No date",
+  "@noDate": {
+    "description": "Profile screen No date"
+  },
+
+  "editYourProfileFfYouWantToAddDescription": "Edit your profile if you want to add a description",
+  "@editYourProfileFfYouWantToAddDescription": {
+    "description": "Profile screen Edit your profile if you want to add a description"
+  },
+
+  "fullName": "Full Name",
+  "@fullName": {
+    "description": "Profile edit screen Full name"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Profile edit screen Save"
+  },
+
+  "failedToPickImage": "Failed to pick image",
+  "@failedToPickImage": {
+    "description": "Profile edit screen Failed to pick image"
+  },
+
+  "camera": "Camera",
+  "@camera": {
+    "description": "Profile edit screen camera"
+  },
+
+  "gallery": "Gallery",
+  "@gallery": {
+    "description": "Profile edit screen gallery"
+  },
+
+  "remove": "Remove",
+  "@remove": {
+    "description": "Profile edit screen remove"
+  },
+
+  "thisIsTheDefaultImageOfYourGoogleAccount": "This is the default image of your Google account",
+  "@thisIsTheDefaultImageOfYourGoogleAccount": {
+    "description": "Profile edit screen This is the default image of your Google account"
+  },
+
+  "signOut": "Sign Out",
+  "@signOut": {
+    "description": "Profile Sign Out"
+  },
+
+  "yes": "Yes",
+  "@yes": {
+    "description": "Text yes"
+  },
+
+  "no": "No",
+  "@no": {
+    "description": "Text no"
+  },
+
+  "verifiedEmail": "Verified email",
+  "@verifiedEmail": {
+    "description": "Text Verified email"
+  },
+
+  "creationDate": "Creation date",
+  "@creationDate": {
+    "description": "Text Creation date"
+  },
+
+  "login": "Login",
+  "@login": {
+    "description": "Text login"
+  },
+
+  "email": "Email",
+  "@email": {
+    "description": "Text email"
+  },
+
+  "enterValidEmail": "Enter a valid email",
+  "@enterValidEmail": {
+    "description": "Text enter Valid Email"
+  },
+
+  "password": "Password",
+  "@password": {
+    "description": "Text password"
+  },
+
+  "repeatPassword": "Repeat password",
+  "@repeatPassword": {
+    "description": "Text repeat password"
+  },
+
+  "enterMinSixCharacters": "Enter min. 6 characters",
+  "@enterMinSixCharacters": {
+    "description": "Text enter min six characters"
+  },
+
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {
+    "description": "Text passwords do not match"
+  },
+
+  "forgotPassword": "Forgot ?",
+  "@forgotPassword": {
+    "description": "Text forgot password"
+  },
+
+  "register": "Register",
+  "@register": {
+    "description": "Text register"
+  },
+
+  "back": "Back",
+  "@back": {
+    "description": "Text back"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Text Cancel"
+  },
+
+  "resetPassword": "Reset password",
+  "@resetPassword": {
+    "description": "Text reset password"
+  },
+
+  "receiveAnEmailToResetYourPassword": "Receive an email to reset your password",
+  "@receiveAnEmailToResetYourPassword": {
+    "description": "Text Receive an email to reset your password"
+  },
+
+  "emailsent": "E-mail sent",
+  "@emailsent": {
+    "description": "Text email sent"
+  },
+
+  "verifyEmail": "Verify email",
+  "@verifyEmail": {
+    "description": "Text Verify email"
+  },
+
+  "resentEmail": "Resent email",
+  "@resentEmail": {
+    "description": "Text Resent email"
+  },
+
+  "verificationEmailHasBeenSentToYourEmail": "A verification email has been sent to your email",
+  "@VerificationEmailHasBeenSentToYourEmail": {
+    "description": "Text VerificationEmailHasBeenSentToYourEmail"
+  },
+
+  "passwordResetEmailSent": "Password reset email sent",
+  "@passwordResetEmailSent": {
+    "description": "Text Password reset email sent"
+  },
+
+  "modifiedProfilePictureSuccessfully": "Modified profile picture successfully",
+  "@modifiedProfilePictureSuccessfully": {
+    "description": "Text Modified profile picture successfully"
+  },
+
+  "photoDeletedSuccessfully": "Photo deleted successfully",
+  "@photoDeletedSuccessfully": {
+    "description": "Text Photo deleted successfully"
+  },
+
+  "userModifiedSuccessfully": "User modified successfully",
+  "@userModifiedSuccessfully": {
+    "description": "Text userModifiedSuccessfully"
+  },
+
+  "pokemonSavedAsFavorite": "Pokemon saved as a favorite",
+  "@pokemonSavedAsFavorite": {
+    "description": "Text pokemonSavedAsFavorite"
+  },
+
+  "pokemonRemovedFromFavorite": "Pokemon removed from favorite",
+  "@pokemonRemovedFromFavorite": {
+    "description": "Text pokemonRemovedFromFavorite"
+  }
+}

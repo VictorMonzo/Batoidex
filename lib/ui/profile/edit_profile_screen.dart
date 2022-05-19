@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'widget/button_widget.dart';
 import 'widget/profile_widget.dart';
@@ -39,10 +40,11 @@ class _EditProfileScreenState extends State<EditProfileScreen>
     nameController = TextEditingController(
         text: widget.userData.name ??
             userAuth.displayName ??
-            'You don\'t have a name yet');
+            AppLocalizations.of(context)!.youDontHaveNameYet);
     aboutController = TextEditingController(
         text: widget.userData.about ??
-            'Edit your profile if you want to add a description');
+            AppLocalizations.of(context)!
+                .editYourProfileFfYouWantToAddDescription);
   }
 
   @override
@@ -80,9 +82,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Full Name',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              Text(
+                AppLocalizations.of(context)!.fullName,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -100,9 +103,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'About',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              Text(
+                AppLocalizations.of(context)!.about,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const SizedBox(height: 8),
               TextFormField(
@@ -124,10 +128,10 @@ class _EditProfileScreenState extends State<EditProfileScreen>
   }
 
   Widget buildUpgradeButton() => ButtonWidget(
-        text: 'Save',
+        text: AppLocalizations.of(context)!.save,
         onClicked: () {
           MyFirebaseData().saveUserData(
-              nameController.text.trim(), aboutController.text.trim());
+              nameController.text.trim(), aboutController.text.trim(), context);
 
           Navigator.pop(context);
         },
@@ -141,10 +145,11 @@ class _EditProfileScreenState extends State<EditProfileScreen>
       final imageTemporary = File(image.path);
       setState(() => this.image = imageTemporary);
 
-      MyFirebaseData().saveImagePath(imageTemporary);
+      MyFirebaseData().saveImagePath(imageTemporary, context);
     } on PlatformException catch (e) {
       MyFunctions().toast(
-          'Failed to pick image ${e.message}', MyColors().redDegradedDark);
+          '${AppLocalizations.of(context)!.failedToPickImage} ${e.message}',
+          MyColors().redDegradedDark);
     }
   }
 
@@ -156,13 +161,13 @@ class _EditProfileScreenState extends State<EditProfileScreen>
               children: [
                 ListTile(
                   leading: const Icon(Icons.camera_alt),
-                  title: const Text('Camera'),
+                  title: Text(AppLocalizations.of(context)!.camera),
                   onTap: () =>
                       Navigator.of(context).pop(pickImage(ImageSource.camera)),
                 ),
                 ListTile(
                   leading: const Icon(Icons.image),
-                  title: const Text('Gallery'),
+                  title: Text(AppLocalizations.of(context)!.gallery),
                   onTap: () =>
                       Navigator.of(context).pop(pickImage(ImageSource.gallery)),
                 ),
@@ -170,17 +175,18 @@ class _EditProfileScreenState extends State<EditProfileScreen>
                     userAuth.photoURL != null)
                   ListTile(
                     leading: const Icon(Icons.delete),
-                    title: const Text('Remove'),
+                    title: Text(AppLocalizations.of(context)!.remove),
                     onTap: () {
                       if (widget.userData.imageUrl != null) {
                         Navigator.of(context)
-                            .pop(MyFirebaseData().deleteImagePath());
+                            .pop(MyFirebaseData().deleteImagePath(context));
 
                         setState(() => imageRemoved = userAuth.photoURL ??
                             MyConstants().NO_IMAGE_PROFILE);
                       } else if (userAuth.photoURL != null) {
                         MyFunctions().toast(
-                            'This is the default image of your Google account',
+                            AppLocalizations.of(context)!
+                                .thisIsTheDefaultImageOfYourGoogleAccount,
                             MyColors().redDegradedDark);
                       }
                     },

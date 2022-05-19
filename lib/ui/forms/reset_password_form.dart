@@ -1,6 +1,7 @@
 import 'package:batoidex_bat/ui/background/background.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../services/firebase/FirebaseAuth.dart';
 
@@ -27,6 +28,8 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+
     return Material(
       child: Stack(
         children: [
@@ -36,11 +39,15 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 60),
-                child: const Text(
-                  "Reset password",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
+                child: SizedBox(
+                  width: width * 0.5,
+                  child: Text(
+                    AppLocalizations.of(context)!.resetPassword,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -78,17 +85,19 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                                   const EdgeInsets.only(left: 16, right: 32),
                               child: TextFormField(
                                 controller: emailController,
-                                decoration: const InputDecoration(
-                                  hintStyle: TextStyle(fontSize: 20),
+                                decoration: InputDecoration(
+                                  hintStyle: const TextStyle(fontSize: 20),
                                   border: InputBorder.none,
-                                  icon: Icon(Icons.account_circle_rounded),
-                                  hintText: "Email",
+                                  icon:
+                                      const Icon(Icons.account_circle_rounded),
+                                  hintText: AppLocalizations.of(context)!.email,
                                 ),
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 validator: (email) => email != null &&
                                         !EmailValidator.validate(email)
-                                    ? 'Enter a valid email'
+                                    ? AppLocalizations.of(context)!
+                                        .enterValidEmail
                                     : null,
                               ),
                             ),
@@ -146,7 +155,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                     child: Container(
                       margin: const EdgeInsets.only(right: 16, top: 16),
                       child: Text(
-                        'Back',
+                        AppLocalizations.of(context)!.back,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -163,12 +172,16 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(left: 16, top: 24),
-                    child: const Text(
-                      'Receive an email to reset your password.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xffe98f60),
+                    child: SizedBox(
+                      width: width * 0.82,
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .receiveAnEmailToResetYourPassword,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xffe98f60),
+                        ),
                       ),
                     ),
                   ),
