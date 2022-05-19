@@ -5,6 +5,7 @@ import 'package:batoidex_bat/ui/forms/login_form.dart';
 import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../MyFunctions.dart';
 
@@ -47,7 +48,7 @@ class MyFirebaseAuthService {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 
-      MyFunctions().toast('Password reset email sent', MyColors().greenLight);
+      MyFunctions().toast(AppLocalizations.of(context)!.passwordResetEmailSent, MyColors().greenLight);
       navigateToPokedex(context);
     } on FirebaseAuthException catch (e) {
       MyFunctions().toast(e.message, MyColors().redDegradedDark);

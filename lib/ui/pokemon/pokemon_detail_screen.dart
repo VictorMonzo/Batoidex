@@ -4,6 +4,7 @@ import 'package:batoidex_bat/services/MyFunctions.dart';
 import 'package:batoidex_bat/services/firebase/FirebaseData.dart';
 import 'package:batoidex_bat/ui/pokemon/pokemon_moviments_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class PokemonDetailScreen extends StatefulWidget {
@@ -55,8 +56,8 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                     widget.pokemonCard?.id ?? widget.pokemonDetail['id']),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return MyFunctions()
-                        .buildTextCenterError('Something went wrong!');
+                    return MyFunctions().buildTextCenterError(
+                        AppLocalizations.of(context)!.somethingWentWrong);
                   } else if (snapshot.hasData) {
                     return buildIconButton(snapshot.data!);
                   } else {
@@ -126,9 +127,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         children: [
                           SizedBox(
                               width: width * 0.3,
-                              child: const Text(
-                                'Name',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.name,
+                                style: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                 ),
@@ -151,9 +152,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         children: [
                           SizedBox(
                               width: width * 0.3,
-                              child: const Text(
-                                'Height',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.height,
+                                style: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                 ),
@@ -176,9 +177,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         children: [
                           SizedBox(
                               width: width * 0.3,
-                              child: const Text(
-                                'Weight',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.weight,
+                                style: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                 ),
@@ -201,9 +202,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         children: [
                           SizedBox(
                               width: width * 0.3,
-                              child: const Text(
-                                'Spawn Time',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.spawnTime,
+                                style: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                 ),
@@ -226,9 +227,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         children: [
                           SizedBox(
                               width: width * 0.3,
-                              child: const Text(
-                                'Weakness',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.weakness,
+                                style: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                 ),
@@ -251,9 +252,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         children: [
                           SizedBox(
                               width: width * 0.3,
-                              child: const Text(
-                                'Evolution',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.evolution,
+                                style: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                 ),
@@ -294,9 +295,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                         },
                                       ),
                                     )
-                                  : const Text(
-                                      'Maxed Out',
-                                      style: TextStyle(
+                                  : Text(
+                                      AppLocalizations.of(context)!.maxedOut,
+                                      style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
@@ -311,9 +312,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         children: [
                           SizedBox(
                               width: width * 0.3,
-                              child: const Text(
-                                'Pre Form',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.preForm,
+                                style: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                 ),
@@ -354,9 +355,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                                         },
                                       ),
                                     )
-                                  : const Text(
-                                      'Just Hatched',
-                                      style: TextStyle(
+                                  : Text(
+                                      AppLocalizations.of(context)!.justHatched,
+                                      style: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold),
@@ -371,17 +372,17 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                         children: [
                           SizedBox(
                               width: width * 0.3,
-                              child: const Text(
-                                'Movements',
-                                style: TextStyle(
+                              child: Text(
+                                AppLocalizations.of(context)!.movements,
+                                style: const TextStyle(
                                   color: Colors.blueGrey,
                                   fontSize: 18,
                                 ),
                               )),
                           InkWell(
-                            child: const Text(
-                              'Click here to see',
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!.clickHereToSee,
+                              style: const TextStyle(
                                 color: Colors.blue,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -392,7 +393,7 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => PokemonMoviments(
+                                      builder: (_) => PokemonMovements(
                                             index: widget.pokemonCard?.id ??
                                                 widget.pokemonDetail['id'],
                                             img: widget.pokemonCard?.img ??
@@ -431,9 +432,9 @@ class _PokemonDetailScreenState extends State<PokemonDetailScreen> {
         onPressed: () {
           isFavorite
               ? MyFirebaseData().deletePokeFavorite(
-                  widget.pokemonCard?.id ?? widget.pokemonDetail['id'])
-              : MyFirebaseData()
-                  .savePokeFavorite(widget.pokemonCard ?? widget.pokemonDetail);
+                  widget.pokemonCard?.id ?? widget.pokemonDetail['id'], context)
+              : MyFirebaseData().savePokeFavorite(
+                  widget.pokemonCard ?? widget.pokemonDetail, context);
 
           MyFirebaseData().saveUserNumFavorites();
 

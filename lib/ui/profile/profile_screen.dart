@@ -6,6 +6,7 @@ import 'package:batoidex_bat/ui/profile/edit_profile_screen.dart';
 import 'package:batoidex_bat/ui/profile/widget/numbers_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'widget/appbar_widget.dart';
 import 'widget/profile_widget.dart';
@@ -28,7 +29,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         future: MyFirebaseData().readData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return MyFunctions().buildTextCenterError('Something went wrong!');
+            return MyFunctions().buildTextCenterError(
+                AppLocalizations.of(context)!.somethingWentWrong);
           } else if (snapshot.hasData) {
             return buildProfile(snapshot.data!);
           } else {
@@ -58,9 +60,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'About',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              AppLocalizations.of(context)!.about,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Text(
@@ -91,16 +93,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           buildName(
               userData.name ??
                   userAuth.displayName ??
-                  'You don\'t have a name yet',
+                  AppLocalizations.of(context)!.youDontHaveNameYet,
               userAuth.email),
           const SizedBox(height: 24),
           NumbersWidget(
               pokeFavorites: userData.numPokeFavs ?? 0,
               verifiedEmail: userAuth.emailVerified,
-              creationDate: userData.creationDate ?? 'No date'),
+              creationDate: userData.creationDate ??
+                  AppLocalizations.of(context)!.noDate),
           const SizedBox(height: 48),
           buildAbout(userData.about ??
-              'Edit your profile if you want to add a description'),
+              AppLocalizations.of(context)!
+                  .editYourProfileFfYouWantToAddDescription),
         ],
       );
 }

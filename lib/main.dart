@@ -7,8 +7,12 @@ import 'package:batoidex_bat/ui/pokemon/pokedex_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:batoidex_bat/services/firebase/GoogleSignIn.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'services/l10n/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +46,8 @@ class Pokedex extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Stack(children: [
                     Background(),
-                    MyFunctions().buildTextCenterError('Something went wrong!')
+                    MyFunctions().buildTextCenterError(
+                        AppLocalizations.of(context)!.somethingWentWrong)
                   ]);
                 } else {
                   return Stack(children: [Background(), const LoginForm()]);
@@ -50,6 +55,13 @@ class Pokedex extends StatelessWidget {
               },
             ),
           ),
+          supportedLocales: L10n.all,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
         ));
   }
 }

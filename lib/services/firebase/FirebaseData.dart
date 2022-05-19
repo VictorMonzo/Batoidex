@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyFirebaseData {
   final String COLLECTION_USER = 'users';
@@ -19,7 +20,7 @@ class MyFirebaseData {
   UploadTask? uploadTask;
 
   /// WRITE DATA
-  Future saveImagePath(File image) async {
+  Future saveImagePath(File image, BuildContext context) async {
     final String path = '${getUid()}/$IMAGE_PROFILE';
     final storage = FirebaseStorage.instance.ref().child(path);
 
@@ -33,18 +34,20 @@ class MyFirebaseData {
 
     final json = {'image_url': urlDownload};
 
-    await docUser.update(json).whenComplete(() => MyFunctions()
-        .toast('Modified profile picture successfully', MyColors().greenLight));
+    await docUser.update(json).whenComplete(() => MyFunctions().toast(
+        AppLocalizations.of(context)!.modifiedProfilePictureSuccessfully,
+        MyColors().greenLight));
   }
 
-  Future deleteImagePath() async {
+  Future deleteImagePath(BuildContext context) async {
     final docUser =
         FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
     final json = {'image_url': null};
 
-    await docUser.update(json).whenComplete(() => MyFunctions()
-        .toast('Photo deleted successfully', MyColors().greenLight));
+    await docUser.update(json).whenComplete(() => MyFunctions().toast(
+        AppLocalizations.of(context)!.photoDeletedSuccessfully,
+        MyColors().greenLight));
   }
 
   Future saveUserCreationData(String creationData) async {
@@ -56,7 +59,7 @@ class MyFirebaseData {
     await docUser.set(json);
   }
 
-  Future saveUserData(String name, String about) async {
+  Future saveUserData(String name, String about, BuildContext context) async {
     final docUser =
         FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
@@ -64,7 +67,8 @@ class MyFirebaseData {
 
     await docUser.update(json);
 
-    MyFunctions().toast('User modified successfully', MyColors().greenLight);
+    MyFunctions().toast(AppLocalizations.of(context)!.userModifiedSuccessfully,
+        MyColors().greenLight);
   }
 
   Future saveUserNumFavorites() async {
@@ -91,7 +95,7 @@ class MyFirebaseData {
     return snapshot.exists ? true : false;
   }
 
-  Future savePokeFavorite(pokemon) async {
+  Future savePokeFavorite(pokemon, BuildContext context) async {
     final docPokeFav = FirebaseFirestore.instance
         .collection(COLLECTION_USER)
         .doc(getUid())
@@ -140,10 +144,11 @@ class MyFirebaseData {
 
     await docPokeFav.set(json);
 
-    MyFunctions().toast('Pokemon saved as a favorite', MyColors().greenLight);
+    MyFunctions().toast(AppLocalizations.of(context)!.pokemonSavedAsFavorite,
+        MyColors().greenLight);
   }
 
-  Future deletePokeFavorite(int id) async {
+  Future deletePokeFavorite(int id, BuildContext context) async {
     final docPokeFav = FirebaseFirestore.instance
         .collection(COLLECTION_USER)
         .doc(getUid())
@@ -152,7 +157,9 @@ class MyFirebaseData {
 
     await docPokeFav.delete();
 
-    MyFunctions().toast('Pokemon removed from favorite', MyColors().greenLight);
+    MyFunctions().toast(
+        AppLocalizations.of(context)!.pokemonRemovedFromFavorite,
+        MyColors().greenLight);
   }
 
   Stream<List<PokemonCard>> getPokeFavorites() => FirebaseFirestore.instance
