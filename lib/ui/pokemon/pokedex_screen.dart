@@ -49,8 +49,7 @@ class _PokedexScreenState extends State<PokedexScreen> {
               'Batoidex',
               style: TextStyle(
                   fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                  fontWeight: FontWeight.bold,),
             )),
         Positioned(
           top: 150,

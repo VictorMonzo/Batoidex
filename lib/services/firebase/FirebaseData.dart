@@ -51,7 +51,7 @@ class MyFirebaseData {
     final docUser =
         FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
 
-    final json = {'data_creation': creationData};
+    final json = {'data_creation': creationData, 'is_dark_theme': false};
 
     await docUser.set(json);
   }
@@ -76,6 +76,30 @@ class MyFirebaseData {
 
       await docUser.update(json);
     });
+  }
+
+  Future saveIsDarkTheme(bool darkTheme) async {
+    final docUser =
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+
+    final json = {'is_dark_theme': darkTheme};
+
+    await docUser.update(json);
+
+    // MyFunctions().toast('Changed theme', MyColors().greenLight);
+  }
+
+  Future<bool> getIsDarkTheme() async {
+    final docUser =
+        FirebaseFirestore.instance.collection(COLLECTION_USER).doc(getUid());
+
+    var data;
+
+    await docUser.get().then((doc) => {data = doc.data()});
+
+    bool isDarkTheme = data['is_dark_theme'];
+
+    return isDarkTheme;
   }
 
   /// FAVORITES

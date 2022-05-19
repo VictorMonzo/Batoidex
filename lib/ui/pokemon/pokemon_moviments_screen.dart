@@ -67,8 +67,7 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
               'Movements',
               style: TextStyle(
                   fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87),
+                  fontWeight: FontWeight.bold),
             )),
         Positioned(
           top: 150,
@@ -88,10 +87,10 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 12),
                           child: Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.black54,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).dividerColor,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                                  const BorderRadius.all(Radius.circular(20)),
                             ),
                             child: Stack(children: [
                               Positioned(
@@ -105,10 +104,10 @@ class _PokemonMovimentsState extends State<PokemonMoviments> {
                               Center(
                                 child: Text(
                                   moviments[index]['move']['name'],
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                               ),

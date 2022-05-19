@@ -37,8 +37,7 @@ class _PokemonesFavoritesScreenState extends State<PokemonesFavoritesScreen> {
               'Favorites',
               style: TextStyle(
                   fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
+                  fontWeight: FontWeight.bold),
             )),
         Positioned(
           top: 150,
